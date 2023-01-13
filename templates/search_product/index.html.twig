@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SearchProductController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <form method="get" action="{{ path('app_search_product') }}">
+    <input type="text" name="nombre" placeholder="Search by name" value="{{ app.request.get('nombre') }}">
+    <input type="submit" value="Search">
+</form>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombreProd}}</td>
+            <td>
+                <a href="{{ path('app_productos_show', {'id': producto.id}) }}">Show</a>
+                <a href="{{ path('app_productos_edit', {'id': producto.id}) }}">Edit</a>
+                <a href="#" class="delete" data-producto-id="{{ producto.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% endblock %}

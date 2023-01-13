@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos index{% endblock %}
+
+{% block body %}
+    <h1>Productos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre_prod</th>
+                <th>Cantidad</th>
+                <th>Genero</th>
+                <th>Precio</th>
+                <th>Descuento</th>
+                <th>Talla</th>
+                <th>Tipo</th>
+                <th>Fotoprod</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombreProd }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.genero }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.descuento }}</td>
+                <td>{{ producto.talla }}</td>
+                <td>{{ producto.tipo }}</td>
+                <td>{{ producto.fotoprod }}</td>
+                <td>
+                    <a href="{{ path('app_productos_show', {'id': producto.id}) }}">show</a>
+                    <a href="{{ path('app_productos_edit', {'id': producto.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_productos_new') }}">Create new</a>
+    <a href="{{ path('app_search_product') }}">Buscar por nombre</a>
+
+
+
+
+{% endblock %}

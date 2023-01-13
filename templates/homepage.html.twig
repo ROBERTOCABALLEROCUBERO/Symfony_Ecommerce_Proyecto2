@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos index{% endblock %}
+
+{% block body %}
+{% for productsChunk in ofertaProductosChunked %}
+    <div class="row">
+        {% for producto in productsChunk %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ producto.nombreProd }}</h5>
+                        <p class="card-text">{{ producto.descuento }}</p>
+                        <p class="card-text">{{ producto.precio }}</p>
+                        <a href="{{ path('app_productos_show', {'id': producto.id}) }}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+{% endblock %}
