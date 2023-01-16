@@ -51,8 +51,9 @@ class ProductosRepository extends ServiceEntityRepository
     {
         // Crea una consulta para recuperar productos que tienen una oferta mayor a cero
         $query = $this->createQueryBuilder('p')
-            ->where('p.descuento > 0')
-            ->getQuery();
+        ->where('p.descuento > 0')
+        ->setMaxResults(8)
+        ->getQuery();
 
         // Ejecuta la consulta y retorna los resultados
         return $query->getResult();
@@ -69,9 +70,7 @@ class ProductosRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->getQuery();
     }
 
     public function findOneBySomeField($value): ?Productos

@@ -23,6 +23,7 @@ class ProductosController extends AbstractController
         // your code here
         $ofertaProductos = $productosRepository->findByOnSale();
         $ofertaProductosChunked = array_chunk($ofertaProductos, 8);
+
         return $this->render('homepage.html.twig', [
             'ofertaProductosChunked' => $ofertaProductosChunked
         ]);
