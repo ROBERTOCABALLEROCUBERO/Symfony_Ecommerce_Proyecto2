@@ -42,8 +42,15 @@ class UsuariosRepository extends ServiceEntityRepository
     , UserPasswordEncoderInterface $passwordEncoder)
     {
         $user->setNombre($nombre);
-        $user->setApellido($nombre);
-
+        $user->setApellido($apellido);
+        $user->setEmail($email);
+        $user->setContrasena($contrasena);
+        $user->setFecha($fecha);
+        $user->setTarjeta($tarjeta);
+        $user->setTitular($titular);
+        $user->setSeguridad($seguridad);
+        $user->setFacturacion($facturacion);
+        
         $user->setConstrasena(
             $passwordEncoder->encodePassword(
                 $user, $contrasena
