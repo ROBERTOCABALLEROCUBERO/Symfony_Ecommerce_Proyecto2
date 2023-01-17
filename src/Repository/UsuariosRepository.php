@@ -24,7 +24,6 @@ class UsuariosRepository extends ServiceEntityRepository
     public function add(Usuarios $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
-
         if ($flush) {
             $this->getEntityManager()->flush();
         }
@@ -37,6 +36,15 @@ class UsuariosRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function registro($nombre, $apellido, $email, $contrasena, $fecha, $tarjeta, $titular, $seguridad, $facturacion)
+    {
+        return $this->createQueryBuilder('p')
+        ->where('p.nombre_prod LIKE :nombre')
+        ->setParameter('nombre', '%'.$name.'%')
+        ->getQuery()
+        ->getResult();
     }
 
 //    /**
