@@ -13,6 +13,7 @@ class UsuariosController extends AbstractController
      */
     public function index(): Response
     {
+        
         return $this->render('usuarios/index.html.twig', [
             'controller_name' => 'UsuariosController',
         ]);
@@ -23,7 +24,6 @@ class UsuariosController extends AbstractController
      */
     public function registro(): Response
     {
-        
         return $this->render('usuarios/registro/index.html.twig', [
             'controller_name' => 'UsuariosController',
         ]);
