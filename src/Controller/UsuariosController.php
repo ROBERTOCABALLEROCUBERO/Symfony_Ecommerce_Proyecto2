@@ -17,4 +17,18 @@ class UsuariosController extends AbstractController
             'controller_name' => 'UsuariosController',
         ]);
     }
+
+    /**
+     * @Route("/usuarios/registro", name="app_usuarios_registro")
+     */
+    public function registro(): Response
+    {
+
+        
+        return $this->render('usuarios/registro/index.html.twig', [
+            'controller_name' => 'UsuariosController',
+        ]);
+    }
+
+
 }
