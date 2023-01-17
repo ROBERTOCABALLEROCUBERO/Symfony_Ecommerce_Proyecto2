@@ -23,7 +23,6 @@ class UsuariosController extends AbstractController
      */
     public function registro(): Response
     {
-
         
         return $this->render('usuarios/registro/index.html.twig', [
             'controller_name' => 'UsuariosController',
