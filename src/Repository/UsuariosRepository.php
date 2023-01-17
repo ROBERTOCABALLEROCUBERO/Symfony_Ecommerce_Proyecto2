@@ -38,13 +38,17 @@ class UsuariosRepository extends ServiceEntityRepository
         }
     }
 
-    public function registro($nombre, $apellido, $email, $contrasena, $fecha, $tarjeta, $titular, $seguridad, $facturacion)
+    public function registro(Usuarios $user, $nombre, $apellido, $email, $contrasena, $fecha, $tarjeta, $titular, $seguridad, $facturacion
+    , UserPasswordEncoderInterface $passwordEncoder)
     {
-        return $this->createQueryBuilder('p')
-        ->where('p.nombre_prod LIKE :nombre')
-        ->setParameter('nombre', '%'.$name.'%')
-        ->getQuery()
-        ->getResult();
+        $user->setNombre($nombre);
+        $user->setApellido($nombre);
+
+        $user->setConstrasena(
+            $passwordEncoder->encodePassword(
+                $user, $contrasena
+            )
+        );
     }
 
 //    /**
