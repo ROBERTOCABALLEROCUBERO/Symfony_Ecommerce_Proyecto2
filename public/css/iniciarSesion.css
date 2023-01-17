@@ -4,10 +4,10 @@
 background-color: #5e74f3;
 
 /* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+background: -webkit-linear-gradient(to right, rgb(124, 58, 58), rgb(217, 219, 221));
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+background: linear-gradient(to right, rgb(0, 0, 3), rgb(0, 59, 160), rgb(155, 177, 238))
 }
 
 
