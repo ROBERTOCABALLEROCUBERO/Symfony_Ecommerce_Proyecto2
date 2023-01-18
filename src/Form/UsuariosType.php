@@ -6,6 +6,7 @@ use App\Entity\Usuarios;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class UsuariosType extends AbstractType
 {
@@ -16,7 +17,10 @@ class UsuariosType extends AbstractType
             ->add('apellidos')
             ->add('contrasena')
             ->add('email')
-            ->add('fechaNacimiento')
+            ->add('fechaNacimiento', DateType::Class, [
+                'format' => 'dd-MM-yyyy',
+                'years' => range(date('1930'), date('Y'))
+            ])
             ->add('numTarjeta')
             ->add('titular')
             ->add('codSeguridad')
