@@ -38,25 +38,7 @@ class UsuariosRepository extends ServiceEntityRepository
         }
     }
 
-    public function registro(Usuarios $user, $nombre, $apellido, $email, $contrasena, $fecha, $tarjeta, $titular, $seguridad, $facturacion
-    , UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $user->setNombre($nombre);
-        $user->setApellido($apellido);
-        $user->setEmail($email);
-        $user->setContrasena($contrasena);
-        $user->setFecha($fecha);
-        $user->setTarjeta($tarjeta);
-        $user->setTitular($titular);
-        $user->setSeguridad($seguridad);
-        $user->setFacturacion($facturacion);
-        
-        $user->setConstrasena(
-            $passwordEncoder->encodePassword(
-                $user, $contrasena->getData()
-            )
-        );
-    }
+   
 
 //    /**
 //     * @return Usuarios[] Returns an array of Usuarios objects
