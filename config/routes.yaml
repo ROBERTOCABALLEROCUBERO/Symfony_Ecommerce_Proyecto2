@@ -17,3 +17,4 @@ app_showuser:
     controller: App\Controller\UsuariosController::show
     methods: GET
 
+    
