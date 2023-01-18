@@ -53,7 +53,7 @@ class UsuariosRepository extends ServiceEntityRepository
         
         $user->setConstrasena(
             $passwordEncoder->encodePassword(
-                $user, $contrasena
+                $user, $contrasena->getData()
             )
         );
     }

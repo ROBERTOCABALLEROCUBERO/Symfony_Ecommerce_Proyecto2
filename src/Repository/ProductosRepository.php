@@ -52,7 +52,7 @@ class ProductosRepository extends ServiceEntityRepository
         // Crea una consulta para recuperar productos que tienen una oferta mayor a cero
         $query = $this->createQueryBuilder('p')
         ->where('p.descuento > 0')
-        ->setMaxResults(8)
+     ->setMaxResults(8) 
         ->getQuery();
 
         // Ejecuta la consulta y retorna los resultados
