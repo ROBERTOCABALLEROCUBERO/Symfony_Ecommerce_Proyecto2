@@ -10,7 +10,7 @@
     
     <h1>Registro</h1>
 
-<form>
+<form method="Post" action= "{{path('app_registro2')}}">
   <div class="form-group">
     <label for="name">Nombre:</label>
     <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre">
@@ -51,8 +51,7 @@
   <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 
-    <h1><a href="{{ path('app_registro') }}">Inicia sesion</a></h1> 
+    <h1><a href="{{ path('app_iniciosesion') }}">Inicia sesion</a></h1> 
 
 {% endblock %}
 
-{% endblock %}

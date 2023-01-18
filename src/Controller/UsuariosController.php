@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UsuariosController extends AbstractController
 {
     /**
-     * @Route("/usuarios", name="app_usuarios")
+     * @Route("/usuarios", name=" app_iniciosesion")
      */
     public function index(): Response
     {

@@ -5,3 +5,18 @@ app_homepage:
     path: /
     controller: App\Controller\ProductosController::homepage
     methods: GET
+
+
+    
+    
+app_registro2:
+    path: /registro
+    controller: App\Controller\RegistroController::registro
+    methods: POST
+    
+
+
+app_iniciosesion:
+    path: /usuario/login
+    controller: App\Controller\UsuariosController::index
+    methods: GET
