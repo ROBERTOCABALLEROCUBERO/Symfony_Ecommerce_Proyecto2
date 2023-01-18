@@ -11,3 +11,9 @@ app_iniciosesion:
     path: /usuario/login
     controller: App\Controller\UsuariosController::index
     methods: GET
+
+app_showuser:
+    path: /usuario
+    controller: App\Controller\UsuariosController::show
+    methods: GET
+
