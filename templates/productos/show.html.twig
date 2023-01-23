@@ -3,7 +3,7 @@
 {% block title %}Productos{% endblock %}
 
 {% block body %}
-    <h1>Productos</h1>
+{#     <h1>Productos</h1>
 
     <table class="table">
         <tbody>
@@ -44,7 +44,28 @@
                 <td>{{ producto.fotoprod }}</td>
             </tr>
         </tbody>
-    </table>
+    </table> #}
+
+    <div class="container">
+        <div class="row mt-3 mb-4">
+            <div class="col-md-4">
+                <img src="https://via.placeholder.com/600x400" alt="{{ producto.nombreProd }}" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+                <h1 class="mt-4 mt-md-0">{{producto.nombreProd}}</h1>
+                <h2>{{ producto.precio }} €</h2>
+                <hr>
+                <b>Descuento: </b>{{ producto.descuento }}
+                <form class="mt-4 p-4 bg-light" method="post">
+                    <div class="form-group">
+                        <label for="quantity"> Cantidad </label>
+                        <input type="number" class="form-control" id="quantity" min="1">
+                    </div>
+                    <button class="btn btn-warning">Añadir al carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <a href="{{ path('app_productos_index') }}">back to list</a>
 
