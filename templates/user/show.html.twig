@@ -1,62 +1,41 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}users{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ user.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Apellidos</th>
-                <td>{{ user.apellidos }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Fechanac</th>
-                <td>{{ user.fechanac ? user.fechanac|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NumTar</th>
-                <td>{{ user.numTar }}</td>
-            </tr>
-            <tr>
-                <th>Titular</th>
-                <td>{{ user.titular }}</td>
-            </tr>
-            <tr>
-                <th>CodSeg</th>
-                <td>{{ user.codSeg }}</td>
-            </tr>
-            <tr>
-                <th>Direccion</th>
-                <td>{{ user.direccion }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_user_index') }}">back to list</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src=""><span class="font-weight-bold">{{ user.nombre }}</span><span class="text-black-50">{{ user.email }}</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Datos Personales</h4>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Nombre</label><br>{{ user.nombre }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Apellidos</label><br>{{ user.password }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Contraseña</label><br>{{ user.contrasena }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Email</label><br>{{ user.email }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNacimiento ? user.fechaNacimiento|date('d-m-Y') : '' }}</div><!-- Problema con fechaNac-->
+                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+                        <h4 class="text-right">Datos Bancarios</h4>
+                    </div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Numero de Tarjeta</label><br>{{ user.numTarjeta }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Titular</label><br>{{ user.titular }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Codigo de Seguridad</label><br>{{ user.codSeguridad }}</div>
+                    <div class="col-md-12"><label class="labels font-weight-bold">Direccion</label><br>{{ user.direccion }}</div>
+                </div>
+                <a href="{{ path('app_user_index') }}" class="mt-5 text-center">Iniciar Sesion</a>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onclick="window.location.href='{{ path('app_users_edit', {'id': user.id}) }}'">Editar Perfil</button></div>
+            <div class="mt-3 text-center"> {{ include('user/_delete_form.html.twig') }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 {% endblock %}
