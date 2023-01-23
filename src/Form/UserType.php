@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class UserType extends AbstractType
 {
@@ -13,11 +14,13 @@ class UserType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('roles')
             ->add('password')
             ->add('apellidos')
             ->add('email')
-            ->add('fechanac')
+            ->add('fechanac',Datetype::Class, [
+                'format' => 'dd-MM-yyyy',
+                'years' => range(date('1950'), date('Y'))
+            ])
             ->add('numTar')
             ->add('titular')
             ->add('codSeg')
