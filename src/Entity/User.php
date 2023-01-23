@@ -51,9 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $fechanac;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
-    private $numtarjeta;
+    private $numTar;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $titular;
 
     /**
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=4)
      */
     private $codSeg;
 
@@ -195,14 +195,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNumtarjeta(): ?string
+    public function getNumTar(): ?string
     {
-        return $this->numtarjeta;
+        return $this->numTar;
     }
 
-    public function setNumtarjeta(string $numtarjeta): self
+    public function setNumTar(string $numTar): self
     {
-        $this->numtarjeta = $numtarjeta;
+        $this->numTar = $numTar;
 
         return $this;
     }
