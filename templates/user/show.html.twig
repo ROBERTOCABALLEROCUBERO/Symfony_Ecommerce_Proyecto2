@@ -17,16 +17,16 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Nombre</label><br>{{ user.nombre }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Apellidos</label><br>{{ user.password }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Contraseña</label><br>{{ user.contrasena }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Apellidos</label><br>{{ user.apellidos }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Contraseña</label><br>{{ user.password }}</div>
                     <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Email</label><br>{{ user.email }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNacimiento ? user.fechaNacimiento|date('d-m-Y') : '' }}</div><!-- Problema con fechaNac-->
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNac ? user.fechaNac|date('d-m-Y') : '' }}</div><!-- Problema con fechaNac-->
                     <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                         <h4 class="text-right">Datos Bancarios</h4>
                     </div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Numero de Tarjeta</label><br>{{ user.numTarjeta }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Numero de Tarjeta</label><br>{{ user.numTar }}</div>
                     <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Titular</label><br>{{ user.titular }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Codigo de Seguridad</label><br>{{ user.codSeguridad }}</div>
+                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Codigo de Seguridad</label><br>{{ user.codSeg}}</div>
                     <div class="col-md-12"><label class="labels font-weight-bold">Direccion</label><br>{{ user.direccion }}</div>
                 </div>
                 <a href="{{ path('app_user_index') }}" class="mt-5 text-center">Iniciar Sesion</a>
