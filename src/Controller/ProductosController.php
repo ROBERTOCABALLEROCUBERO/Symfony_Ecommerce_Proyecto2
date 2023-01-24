@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Manager\CartManager;
+use App\Service\CartSessionStorage;
+use App\Form\AddToCartType;
 /**
  * @Route("/productos")
  */
@@ -65,11 +67,32 @@ class ProductosController extends AbstractController
     /**
      * @Route("/{id}", name="app_productos_show", methods={"GET"})
      */
-    public function show(Productos $producto): Response
+    public function show(Productos $producto, Request $request, CartManager $cartManager): Response
     {
+
+        $form = $this->createForm(AddToCartType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $item = $form->getData();
+            $item->setProduct($product);
+
+            $cart = $cartManager->getCurrentCart();
+            $cart
+                ->addItem($item)
+                ->setUpdatedAt(new \DateTime());
+
+            $cartManager->save($cart);
+
+            return $this->redirectToRoute('producto.show', ['id' => $producto->getId()]);
+        }
+
         return $this->render('productos/show.html.twig', [
             'producto' => $producto,
+            'form' => $form->createView()
         ]);
+
     }
 
     /**

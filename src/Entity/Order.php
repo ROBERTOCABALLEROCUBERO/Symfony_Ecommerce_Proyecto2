@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
- * @ORM\Table(name="`order`")
+ * @ORM\Table(name="`Order`")
  */
 class Order
 {
@@ -19,7 +19,7 @@ class Order
     private $status = self::STATUS_CART;
 
     /**
-     * An order that is in progress, not placed yet.
+     * An Order that is in progress, not placed yet.
      *
      * @var string
      */
@@ -34,7 +34,7 @@ class Order
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=orderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="OrderRef", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $items;
 
@@ -64,14 +64,14 @@ class Order
     }
 
     /**
-     * @return Collection<int, orderItem>
+     * @return Collection<int, OrderItem>
      */
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    public function addItem(orderItem $item): self
+    public function addItem(OrderItem $item): self
     {
         foreach ($this->getItems() as $existingItem) {
             // The item already exists, update the quantity
@@ -89,7 +89,7 @@ class Order
         return $this;
     }
 
-    public function removeItem(orderItem $item): self
+    public function removeItem(OrderItem $item): self
     {
         foreach ($this->getItems() as $item) {
             $this->removeItem($item);
@@ -134,7 +134,7 @@ class Order
         return $this;
     }
     /**
- * Calculates the order total.
+ * Calculates the Order total.
  *
  * @return float
  */

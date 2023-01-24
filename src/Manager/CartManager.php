@@ -12,7 +12,7 @@ use App\Storage\CartSessionStorage;
  */
 class CartManager
 {
-    /**
+   /**
      * @var CartSessionStorage
      */
     private $cartSessionStorage;
@@ -23,20 +23,24 @@ class CartManager
     private $cartFactory;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
      * CartManager constructor.
      *
      * @param CartSessionStorage $cartStorage
      * @param OrderFactory $orderFactory
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(
-        CartSessionStorage $cartStorage,
-        OrderFactory $orderFactory
-    ) {
+    public function __construct(CartSessionStorage $cartStorage, OrderFactory $orderFactory) {
         $this->cartSessionStorage = $cartStorage;
         $this->cartFactory = $orderFactory;
+   /*      $this->entityManager = $entityManager; */
     }
 
-    /**
+  /**
      * Gets the current cart.
      * 
      * @return Order
@@ -51,4 +55,19 @@ class CartManager
 
         return $cart;
     }
+
+    /**
+     * Persists the cart in database and session.
+     *
+     * @param Order $cart
+     */
+    public function save(Order $cart): void
+    {
+        // Persist in database
+        $this->entityManager->persist($cart);
+        $this->entityManager->flush();
+        // Persist in session
+        $this->cartSessionStorage->setCart($cart);
+    }
+
 }
