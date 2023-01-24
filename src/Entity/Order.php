@@ -76,7 +76,7 @@ class Order
         foreach ($this->getItems() as $existingItem) {
             // The item already exists, update the quantity
             if ($existingItem->equals($item)) {
-                $existingItem->setCamtidad(
+                $existingItem->setCantidad(
                     $existingItem->getCantidad() + $item->getCantidad()
                 );
                 return $this;
@@ -133,4 +133,19 @@ class Order
 
         return $this;
     }
+    /**
+ * Calculates the order total.
+ *
+ * @return float
+ */
+public function getTotal(): float
+{
+    $total = 0;
+
+    foreach ($this->getItems() as $item) {
+        $total += $item->getTotal();
+    }
+
+    return $total;
+}
 }
