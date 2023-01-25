@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <form action="{{ path('agregar_al_carrito', {'id': producto.id}) }}" method="post">
+            <form action="{{ path('app_agregarcarrito', {'id': producto.id}) }}" method="post">
                 <div class="form-group">
                     <label for="cantidad">Cantidad</label>
                     <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1">

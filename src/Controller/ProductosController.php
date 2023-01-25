@@ -9,9 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Manager\CartManager;
-use App\Service\CartSessionStorage;
-use App\Form\AddToCartType;
+use App\Controller\Carrito;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * @Route("/productos")
  */
@@ -111,8 +111,34 @@ class ProductosController extends AbstractController
         return $this->redirectToRoute('app_productos_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    /**
+ * @Route("/agregarcarrito/{id}")
+ */
+public function agregarAlCarrito(Request $request, Session $session, Productos $id)
+{
+    // Obtener el producto mediante el id proporcionado
+    $producto = $this->getDoctrine()->getRepository(Productos::class)->findOneBy(["id"=> $id]);
+    // Obtener la cantidad del producto desde el formulario
+    $cantidad = $request->request->get('cantidad');
+    // Crear una instancia de la entidad "Carrito" con la información del producto y la cantidad
+    $carrito = array(
+        'id' => $producto->getId(),
+        'nombreProducto' => $producto->getNombreProd(),
+        'cantidad' => $cantidad
+    );
+    // Añadir el objeto "Carrito" a la sesión del usuario
+    $session->session_start();
+    if($session->has('carrito')){
+        $carritoSession = $session->get('carrito');
+        array_push($carritoSession, $carrito);
+        $session->set('carrito', $carritoSession);
+    }else{
+        $session->set('carrito', array($carrito));
+    }
+    // Redirigir al usuario a la página de visualización del carrito
+    return $this->redirectToRoute('app_agregarcarrito');
+}
 
-      
 
 
 }
