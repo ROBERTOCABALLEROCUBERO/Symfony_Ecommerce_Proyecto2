@@ -67,30 +67,14 @@ class ProductosController extends AbstractController
     /**
      * @Route("/{id}", name="app_productos_show", methods={"GET"})
      */
-    public function show(Productos $producto, Request $request, CartManager $cartManager): Response
+    public function show(Productos $producto): Response
     {
 
-        $form = $this->createForm(AddToCartType::class);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $item = $form->getData();
-            $item->setProduct($product);
-
-            $cart = $cartManager->getCurrentCart();
-            $cart
-                ->addItem($item)
-                ->setUpdatedAt(new \DateTime());
-
-            $cartManager->save($cart);
-
-            return $this->redirectToRoute('producto.show', ['id' => $producto->getId()]);
-        }
+       
 
         return $this->render('productos/show.html.twig', [
             'producto' => $producto,
-            'form' => $form->createView()
+            
         ]);
 
     }

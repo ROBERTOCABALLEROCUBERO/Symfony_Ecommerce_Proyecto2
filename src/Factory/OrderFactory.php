@@ -21,7 +21,7 @@ class OrderFactory
     {
         $order = new Order();
         $order
-            ->setEstatus(Order::STATUS_CART)
+            ->setEstatus(Order::ESTATUS_CART)
             ->setCreatedAt(new \DateTime())
             ->setUpdatedAt(new \DateTime());
 
