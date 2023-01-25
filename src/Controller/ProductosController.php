@@ -127,7 +127,7 @@ public function agregarAlCarrito(Request $request, Session $session, Productos $
         'cantidad' => $cantidad
     );
     // Añadir el objeto "Carrito" a la sesión del usuario
-    $session->session_start();
+    $session->start();
     if($session->has('carrito')){
         $carritoSession = $session->get('carrito');
         array_push($carritoSession, $carrito);
