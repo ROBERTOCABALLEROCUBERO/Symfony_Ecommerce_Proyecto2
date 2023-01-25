@@ -4,48 +4,37 @@
 {% endblock %}
 
 {% block body %}
-	     <h1>Productos</h1>
-	
-	    <table class="table">
-	        <tbody>
-	            <tr>
-	                <th>Id</th>
-	                <td>{{ producto.id }}</td>
-	            </tr>
-	            <tr>
-	                <th>Nombre_prod</th>
-	                <td>{{ producto.nombreProd }}</td>
-	            </tr>
-	            <tr>
-	                <th>Cantidad</th>
-	                <td>{{ producto.cantidad }}</td>
-	            </tr>
-	            <tr>
-	                <th>Genero</th>
-	                <td>{{ producto.genero }}</td>
-	            </tr>
-	            <tr>
-	                <th>Precio</th>
-	                <td>{{ producto.precio }}</td>
-	            </tr>
-	            <tr>
-	                <th>Descuento</th>
-	                <td>{{ producto.descuento }}</td>
-	            </tr>
-	            <tr>
-	                <th>Talla</th>
-	                <td>{{ producto.talla }}</td>
-	            </tr>
-	            <tr>
-	                <th>Tipo</th>
-	                <td>{{ producto.tipo }}</td>
-	            </tr>
-	            <tr>
-	                <th>Fotoprod</th>
-	                <td>{{ producto.fotoprod }}</td>
-	            </tr>
-	        </tbody>
-	    </table> 
+	   
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto">
+        </div>
+        <div class="col-md-9">
+            <h5>{{ producto.nombreProd }}</h5>
+            <p>
+                <strong>Genero:</strong> {{ producto.genero }} <br>
+                <strong>Precio:</strong> {{ producto.precio }} <br>
+                <strong>Descuento:</strong> {{ producto.descuento }} <br>
+                <strong>Talla:</strong> {{ producto.talla }} <br>
+                <strong>Tipo:</strong> {{ producto.tipo }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <form action="{{ path('agregar_al_carrito', {'id': producto.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Agregar al carrito">
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 
 		<a href="{{ path('app_productos_index') }}">back to list</a>
