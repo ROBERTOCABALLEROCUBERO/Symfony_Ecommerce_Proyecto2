@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\Carrito;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -46,9 +47,9 @@ class ProductosController extends AbstractController
     /**
      * @Route("/new", name="app_productos_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ProductosRepository $productosRepository): Response
+    public function new(Request $request, ProductosRepository $productosRepository, EntityManager $em): Response
     {
-        $producto = new Productos();
+        $producto = new Productos($em);
         $form = $this->createForm(ProductosType::class, $producto);
         $form->handleRequest($request);
 
@@ -114,10 +115,10 @@ class ProductosController extends AbstractController
     /**
  * @Route("/agregarcarrito/{id}")
  */
-public function agregarAlCarrito(Request $request, Session $session, Productos $id)
+public function agregarAlCarrito(Request $request, Session $session, ProductosRepository $productosRepository)
 {
     // Obtener el producto mediante el id proporcionado
-    $producto = $this->getDoctrine()->getRepository(Productos::class)->findOneBy(["id"=> $id]);
+    $producto = $productosRepository->findOneBy($request->query->get("id"));
     // Obtener la cantidad del producto desde el formulario
     $cantidad = $request->request->get('cantidad');
     // Crear una instancia de la entidad "Carrito" con la información del producto y la cantidad

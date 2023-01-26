@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Repository\ProductosRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\EntityManagerInterface;
 /**
  * @ORM\Entity(repositoryClass=ProductosRepository::class)
  */
 class Productos
 {
+    private $em;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -57,7 +58,7 @@ class Productos
      */
     private $fotoprod;
 
-
+ 
     public function getId(): ?int
     {
         return $this->id;

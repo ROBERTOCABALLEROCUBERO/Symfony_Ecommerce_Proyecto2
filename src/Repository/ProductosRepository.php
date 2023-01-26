@@ -63,7 +63,7 @@ class ProductosRepository extends ServiceEntityRepository
     /**
      * @return Productos[] Returns an array of Productos objects
 **/
-   public function findByExampleField($value): array
+   public function findByExampleField($value)
    {
         return $this->createQueryBuilder('p')
            ->andWhere('p.nombre LIKE :val')
@@ -73,10 +73,10 @@ class ProductosRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
-    public function findOneBySomeField($value): ?Productos
+    public function findOneByid($value): Productos
     {
         return $this->createQueryBuilder('p')
-        ->andWhere('p.nombre LIKE :val')
+        ->andWhere('p.id = :val')
         ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

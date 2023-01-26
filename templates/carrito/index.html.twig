@@ -9,12 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/Users/Jose Angel/Documents/GitHub/Symfony_Ecommerce_Proyecto2/src/Controller/CarritoController.php'|file_link(0) }}">src/Controller/CarritoController.php</a></code></li>
         <li>Your template at <code><a href="{{ 'C:/Users/Jose Angel/Documents/GitHub/Symfony_Ecommerce_Proyecto2/templates/carrito/index.html.twig'|file_link(0) }}">templates/carrito/index.html.twig</a></code></li>
     </ul>
+    <p> {{dump(carrito) }}</p>
+
+{% for item in carrito %}
+      <p> {{item.nombreProducto }}</p>
+{% endfor %}
+    
 </div>
 {% endblock %}
