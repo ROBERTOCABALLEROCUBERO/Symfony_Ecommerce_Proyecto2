@@ -31,7 +31,8 @@ class CarritoController extends AbstractController
          $carrito = array(
              'id' => $producto->getId(),
              'nombreProducto' => $producto->getNombreProd(),
-             'cantidad' => $cantidad
+             'cantidad' => $cantidad,
+             'precio' => $producto->getprecio()
          );
          // Añadir el objeto "Carrito" a la sesión del usuario
          $session->start();
