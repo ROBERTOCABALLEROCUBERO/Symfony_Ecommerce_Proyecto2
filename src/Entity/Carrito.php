@@ -32,6 +32,11 @@ class Carrito
      */
     private $cantidad;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $lista_prod = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Carrito
     public function setCantidad(int $cantidad): self
     {
         $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    public function getListaProd(): ?array
+    {
+        return $this->lista_prod;
+    }
+
+    public function setListaProd(array $lista_prod): self
+    {
+        $this->lista_prod = $lista_prod;
 
         return $this;
     }
