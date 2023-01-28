@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProductosRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class CarritoController extends AbstractController
 {
@@ -43,12 +44,22 @@ class CarritoController extends AbstractController
          }else{
              $session->set('carrito', array($carrito));
          }
+         $total = 0;
+         $carrito = $session->get('carrito');
+         foreach ($carrito as $item) {
+             $total += $item['precio'];
+         }
+        
         
         return $this->render('carrito/index.html.twig', [
-            'carrito' => $carritoSession,
+            'carrito' => $session->get('carrito'),
+            'precio' => $total,
         ]);
+        
     }
 
         
 
 }
+
+

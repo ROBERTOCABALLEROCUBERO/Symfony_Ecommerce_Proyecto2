@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Repository\ProductosRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Entity;
+
 /**
  * @ORM\Entity(repositoryClass=ProductosRepository::class)
  */
@@ -38,7 +40,7 @@ class Productos
      */
     private $precio;
 
-     /**
+    /**
      * @ORM\Column(type="float")
      */
     private $descuento;
@@ -58,7 +60,8 @@ class Productos
      */
     private $fotoprod;
 
- 
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -147,14 +150,13 @@ class Productos
         return $this;
     }
     public function getfotoprod(): ?string
-{
-    return $this->fotoprod;
-}
+    {
+        return $this->fotoprod;
+    }
 
-public function setfotoprod(string $fotoprod): self
-{
-    $this->fotoprod = $fotoprod;
-    return $this;
-}
-
+    public function setfotoprod(string $fotoprod): self
+    {
+        $this->fotoprod = $fotoprod;
+        return $this;
+    }
 }

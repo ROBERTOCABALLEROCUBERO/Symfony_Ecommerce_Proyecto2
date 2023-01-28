@@ -17,20 +17,13 @@ class Carrito
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nombre_producto;
 
     /**
      * @ORM\Column(type="integer")
      */
     private $user_id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $cantidad;
+   
 
     /**
      * @ORM\Column(type="array")
@@ -42,17 +35,7 @@ class Carrito
         return $this->id;
     }
 
-    public function getNombreProducto(): ?string
-    {
-        return $this->nombre_producto;
-    }
-
-    public function setNombreProducto(string $nombre_producto): self
-    {
-        $this->nombre_producto = $nombre_producto;
-
-        return $this;
-    }
+   
 
     public function getUserId(): ?int
     {
@@ -66,18 +49,7 @@ class Carrito
         return $this;
     }
 
-    public function getCantidad(): ?int
-    {
-        return $this->cantidad;
-    }
-
-    public function setCantidad(int $cantidad): self
-    {
-        $this->cantidad = $cantidad;
-
-        return $this;
-    }
-
+    
     public function getListaProd(): ?array
     {
         return $this->lista_prod;
