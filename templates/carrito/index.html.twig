@@ -4,10 +4,11 @@
 
 {% block body %}
 
-    <p> {{dump(carrito) }}</p>
+
 
 {% for item in carrito %}
       <p> {{item.nombreProducto}}</p>
+       <p> {{item.precio}}</p>
 {% endfor %}
           <p>El total del precio es: {{precio}}</p>
 </div>

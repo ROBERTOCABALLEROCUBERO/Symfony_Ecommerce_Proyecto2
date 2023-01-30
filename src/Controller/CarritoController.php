@@ -57,7 +57,7 @@ class CarritoController extends AbstractController
          $total = 0;
          $carrito = $session->get('carrito');
          foreach ($carrito as $item) {
-             $total += $item['precio'];
+             $total += $item['precio'] * $item['cantidad'];
          }
         
         
