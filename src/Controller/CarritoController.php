@@ -11,6 +11,7 @@ use App\Repository\ProductosRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Security\Core\Security;
 
 class CarritoController extends AbstractController
 {
@@ -21,10 +22,19 @@ class CarritoController extends AbstractController
     
 
    
-    public function index(Session $session, Request $request, ProductosRepository $productosRepository): Response
+    public function index(Session $session, Request $request, ProductosRepository $productosRepository, Security $security): Response
     {
          // Obtener el producto mediante el id proporcionado
+         if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión
+            return $this->redirectToRoute('app_login');
+        }
+       
          $id = $request->get("id");
+         if (!$id) {
+            // Redirigir al usuario a la página principal o mostrar un mensaje de error
+            return $this->redirectToRoute('app_homepage');
+        }
          $producto = $productosRepository->findOneByid($id); 
          // Obtener la cantidad del producto desde el formulario
          $cantidad = $request->request->get('cantidad');
@@ -55,11 +65,11 @@ class CarritoController extends AbstractController
             'carrito' => $session->get('carrito'),
             'precio' => $total,
         ]);
-        
+    }
     }
 
         
 
-}
+
 
 

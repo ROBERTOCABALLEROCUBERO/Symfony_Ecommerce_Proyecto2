@@ -3,23 +3,16 @@
 {% block title %}Hello CarritoController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Jose Angel/Documents/GitHub/Symfony_Ecommerce_Proyecto2/src/Controller/CarritoController.php'|file_link(0) }}">src/Controller/CarritoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Jose Angel/Documents/GitHub/Symfony_Ecommerce_Proyecto2/templates/carrito/index.html.twig'|file_link(0) }}">templates/carrito/index.html.twig</a></code></li>
-    </ul>
     <p> {{dump(carrito) }}</p>
 
 {% for item in carrito %}
       <p> {{item.nombreProducto}}</p>
 {% endfor %}
-          <p>El total del precio es: {{total}}</p>
+          <p>El total del precio es: {{precio}}</p>
 </div>
+<form action="{{ path('app_listar_compras') }}" method="post">
+  <input type="submit" value="Comprar">
+</form>
+
 {% endblock %}

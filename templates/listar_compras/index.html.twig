@@ -3,22 +3,25 @@
 {% block title %}Hello ListarComprasController!{% endblock %}
 
 {% block body %}
-<table>
-    <tr>
-        <th>Id</th>
-        <th>User Id</th>
-        <th>Lista Productos</th>
-    </tr>
-    {% for pedido in pedidos %}
-    <tr>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.userId }}</td>
-        <td>
+<div class="card-columns">
+  {% for pedido in pedidos %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Pedido {{ pedido.id }}</h5>
+      <p class="card-text">
+        <b>User Id:</b> {{ pedido.userId }} <br>
+        <b>Lista de Productos:</b> <br>
         {% for product in pedido.listaProd %}
         {{ product.nombreProducto }} - {{ product.cantidad }} - {{ product.precio }} <br>
         {% endfor %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+      </p>
+      <form action="{{ path('app_devolver') }}" method="GET">
+        <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
+        <button type="submit" class="btn btn-danger">Devolver</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
 {% endblock %}
