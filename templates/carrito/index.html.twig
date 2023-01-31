@@ -1,19 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarritoController!{% endblock %}
+{% block title %}Hello CarritoController!
+{% endblock %}
 
 {% block body %}
 
 
-
-{% for item in carrito %}
-      <p> {{item.nombreProducto}}</p>
-       <p> {{item.precio}}</p>
-{% endfor %}
-          <p>El total del precio es: {{precio}}</p>
+	{% for item in carrito %}
+		<p>
+			{{item.nombreProducto}}</p>
+		<p>
+			{{item.precio}}</p>
+      <p>
+			{{item.cantidad}}</p>
+{# 		<form action="{{ path('app_eliminar_producto', {'id': item.id}) }}" method="post">
+			<input type="submit" value="Eliminar">
+		</form> #}
+	{% endfor %}
+	<p>El total del precio es:
+		{{precio}}</p>
 </div>
 <form action="{{ path('app_listar_compras') }}" method="post">
-  <input type="submit" value="Comprar">
+	<input type="submit" value="Comprar">
+  
 </form>
-
-{% endblock %}
+<form action="{{ path('app_limpiar_carrito') }}" method="post">
+  <input type="submit" value="Limpiar Carrito">
+</form>{% endblock %}

@@ -31,29 +31,52 @@ class CarritoController extends AbstractController
         }
        
          $id = $request->get("id");
-         if (!$id) {
-            // Redirigir al usuario a la página principal o mostrar un mensaje de error
-            return $this->redirectToRoute('app_homepage');
+         if (!$id || ($productosRepository->findOneMaxID($id)) == null) {
+            $session->start();
+            $carrito = $session->get('carrito', []);
+        
+            $total = 0;
+            foreach ($carrito as $item) {
+                $total += $item['precio'] * $item['cantidad'];
+            }
+        
+            return $this->render('carrito/index.html.twig', [
+                'carrito' => $carrito,
+                'precio' => $total,
+            ]);
         }
          $producto = $productosRepository->findOneByid($id); 
          // Obtener la cantidad del producto desde el formulario
          $cantidad = $request->request->get('cantidad');
          // Crear una instancia de la entidad "Carrito" con la información del producto y la cantidad
-         $carrito = array(
-             'id' => $producto->getId(),
-             'nombreProducto' => $producto->getNombreProd(),
-             'cantidad' => $cantidad,
-             'precio' => $producto->getprecio()
-         );
+         $carrito = [
+            'id' => $producto->getId(),
+            'nombreProducto' => $producto->getNombreProd(),
+            'cantidad' => $cantidad,
+            'precio' => $producto->getPrecio()
+        ];
          // Añadir el objeto "Carrito" a la sesión del usuario
          $session->start();
-         if($session->has('carrito')){
-             $carritoSession = $session->get('carrito');
-             array_push($carritoSession, $carrito);
-             $session->set('carrito', $carritoSession);
-         }else{
-             $session->set('carrito', array($carrito));
-         }
+         if ($session->has('carrito')) {
+            $carritoSession = $session->get('carrito');
+            $existeProducto = false;
+            foreach ($carritoSession as &$itemCarrito) {
+                if ($itemCarrito['id'] === $carrito['id']) {
+                    $itemCarrito['cantidad'] += $carrito['cantidad'];
+                    $existeProducto = true;
+                    break;
+                }
+                /* Para cada elemento, se compara su identificador con el identificador del producto actual que se agrega al carrito. 
+                Si los identificadores coinciden, significa que el producto actual ya existe en el carrito, por lo que solo se aumenta la cantidad del producto en el carrito. 
+                Además, la variable booleana "$existeProducto" se establece en verdadero. Una vez que se encuentra el producto, el ciclo se rompe utilizando "break".*/
+            }
+            if (!$existeProducto) {
+                array_push($carritoSession, $carrito);
+            }
+            $session->set('carrito', $carritoSession);
+        } else {
+            $session->set('carrito', [$carrito]);
+        }
          $total = 0;
          $carrito = $session->get('carrito');
          foreach ($carrito as $item) {
@@ -66,6 +89,35 @@ class CarritoController extends AbstractController
             'precio' => $total,
         ]);
     }
+
+    /**
+     * @Route("/limpiar-carrito", name="app_limpiar_carrito")
+     */
+    public function limpiarCarrito(Session $session)
+    {
+        // Limpia el carrito
+        $session->remove('carrito');
+
+        return $this->redirectToRoute('app_carrito');
+    }
+
+    /* 
+     * @Route("/eliminar-producto/{id}", name="app_eliminar_producto")
+     */
+   /*  public function eliminarProducto(Request $request, Session $session)
+    {
+        $id = $request->get("id");
+        // Obtiene el carrito de la sesión
+        $carrito = $session->get('carrito', []);
+
+        // Elimina el producto con el ID especificado
+        unset($carrito[$id]);
+
+        // Guarda el carrito actualizado en la sesión
+        $session->set('carrito', $carrito);
+
+        return $this->redirectToRoute('app_carrito');
+    } */ 
     }
 
         

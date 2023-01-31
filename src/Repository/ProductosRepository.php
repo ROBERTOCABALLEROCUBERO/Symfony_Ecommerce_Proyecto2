@@ -82,4 +82,13 @@ class ProductosRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
    }
+
+   public function findOneMaxID($value)
+   {
+        return $this->createQueryBuilder('p')
+        ->select('MAX(p.id)')
+        ->getQuery()
+        ->getOneOrNullResult()
+;
+  }
 }
