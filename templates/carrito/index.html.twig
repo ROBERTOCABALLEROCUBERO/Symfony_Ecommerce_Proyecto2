@@ -13,9 +13,15 @@
 			{{item.precio}}</p>
       <p>
 			{{item.cantidad}}</p>
-{# 		<form action="{{ path('app_eliminar_producto', {'id': item.id}) }}" method="post">
+	<form action="{{ path('app_eliminar_producto', {'id': item.id}) }}" method="post">
 			<input type="submit" value="Eliminar">
-		</form> #}
+		</form>   
+<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'add'}) }}" method="post">
+  <input type="submit" value="+">
+</form>
+<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'sub'}) }}" method="post">
+  <input type="submit" value="-">
+</form>
 	{% endfor %}
 	<p>El total del precio es:
 		{{precio}}</p>
