@@ -4,18 +4,29 @@
 {% endblock %}
 
 {% block body %}
+	<div class="text-center my-5">
+		<h2 class="font-weight-bold">Bienvenido a Artist Shop</h2>
+		<p class="lead">Encuentra las últimas tendencias y estilos en Artist Shop.</p>
+	</div>
+
+	<div class="text-center">
+		<a href="{{ path('app_productos_index') }}" class="btn btn-dark">Ver más</a>
+	</div>
+<img src="{{ asset('img/logotipo-prueba.webp') }}" class="img-fluid my-5 d-flex mx-auto" style="width: 800px; height: 800px;" alt="tendencias de la moda">
+
+
 	{% for productsChunk in ofertaProductosChunked %}
-		<div class="row">
+		<div class="row mx-3 my-3">
 			{% for producto in productsChunk %}
-				<div class="col-sm-3">
-					<div class="card mb-4">
+				<div class="col-sm-3 mb-4">
+					<div class="card">
 						<img src="#" alt="{{ producto.nombreProd }}" class="card-img-top">
 						<div class="card-body">
 							<h5 class="card-title">{{ producto.nombreProd }}</h5>
-							<p class="card-text">{{ producto.descuento  }}
+							<p class="card-text">{{ producto.descuento }}
 								%</p>
 							<div class="d-flex justify-content-between align-item-center">
-								<a href="{{ path('app_productos_show', {'id': producto.id}) }}" class="btn btn-dark">View details</a>
+								<a href="{{ path('app_productos_show', {'id': producto.id}) }}" class="btn btn-dark">Ver detalles</a>
 								<span class="h5 mt-auto">{{ producto.precio }}
 									€</span>
 							</div>
@@ -25,5 +36,4 @@
 			{% endfor %}
 		</div>
 	{% endfor %}
-
 {% endblock %}
