@@ -31,7 +31,7 @@ class CarritoController extends AbstractController
         }
 
         $id = $request->get("id");
-        if (!$id || ($productosRepository->findOneMaxID($id)) == null) {
+        if (!$id || ($productosRepository->findOneMaxID($id)) < $id) {
             $session->start();
             $carrito = $session->get('carrito', []);
 
