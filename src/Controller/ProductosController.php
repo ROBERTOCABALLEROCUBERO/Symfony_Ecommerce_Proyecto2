@@ -46,6 +46,9 @@ class ProductosController extends AbstractController
      */
     public function new(Request $request, ProductosRepository $productosRepository): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+            return $this->redirectToRoute('app_homepage'); 
+        }
         $producto = new Productos();
         $form = $this->createForm(Productos1Type::class, $producto);
         $form->handleRequest($request);
@@ -77,6 +80,9 @@ class ProductosController extends AbstractController
      */
     public function edit(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+            return $this->redirectToRoute('app_homepage'); 
+        }
         $form = $this->createForm(Productos1Type::class, $producto);
         $form->handleRequest($request);
 
