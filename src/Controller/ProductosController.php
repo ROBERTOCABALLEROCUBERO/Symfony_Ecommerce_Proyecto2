@@ -103,6 +103,9 @@ class ProductosController extends AbstractController
      */
     public function delete(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+            return $this->redirectToRoute('app_homepage'); 
+        }
         if ($this->isCsrfTokenValid('delete'.$producto->getId(), $request->request->get('_token'))) {
             $productosRepository->remove($producto, true);
         }
