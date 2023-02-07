@@ -27,21 +27,26 @@
 				<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 			</svg>
 		</a>
-		{% if app.user %}
-			{% if is_granted('ROLE_ADMIN') %}
+
+		<!--MA Menu de la pagina -->
+		{% if app.user %} <!-- si un usuario tiene todos los atributos establecidos -->
+			{% if is_granted('ROLE_ADMIN') %}	<!-- si es role_admin se ejecuta el if -->
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-dark btn-lg">Mostrar perfil</button>
 				</div>
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_productos_new')}}'" type="button" class="btn btn-dark btn-lg">Crear Producto</button>
 				</div>
-			{% else %}	
+
+			{% else %} <!-- se ejecuta si es un user normal -->	
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-dark btn-lg">Mostrar perfil</button>
 				</div>	
-			{% endif %}
+
+			{% endif %} <!-- se ejecuta para los dos, el nombre del usuario registrado -->
 				<br><p>{{app.user.nombre}}</p>
-		{% else %}
+
+		{% else %} <!-- esto se ejecuta si no está registrado el usuario -->
 			<div class="d-flex justify-content-center mx-4 ">
 				<button onclick="window.location.href='/login'" type="button" class="btn btn-dark btn-lg">Iniciar Sesión</button>
 			</div>
