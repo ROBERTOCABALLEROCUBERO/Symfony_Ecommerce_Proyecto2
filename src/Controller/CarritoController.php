@@ -24,7 +24,6 @@ class CarritoController extends AbstractController
 
     public function index(Session $session, Request $request, ProductosRepository $productosRepository, Security $security): Response
     {
-        // Obtener el producto mediante el id proporcionado
         if (!$this->isGranted('ROLE_USER')) {  //MA Si el usuario no es usuario no podra acceder y será enviado a login
             return $this->redirectToRoute('app_login'); 
         }

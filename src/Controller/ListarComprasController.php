@@ -19,6 +19,9 @@ class ListarComprasController extends AbstractController
      */
     public function index(CarritoRepository $carritoRepository, Session $session, Security $security): Response
     {
+        if (!$this->isGranted('ROLE_USER')) {  //MA Si no es usuario no podra acceder y será enviado a la página de registro
+            return $this->redirectToRoute('app_register'); 
+        }
         $carrito = new Carrito();
         $user = $this->getUser();
         $userId = $user->getId();
@@ -28,13 +31,11 @@ class ListarComprasController extends AbstractController
         $carrito->setListaProd($session->get('carrito'));
         $carritoRepository->add($carrito, true);
         
-        $session->remove("carrito");
+        $session->remove("carrito");    
     }
     $pedidos = $carritoRepository->findByUserId($userId);
         return $this->render('listar_compras/index.html.twig', [
             'pedidos' => $pedidos,
         ]);
-    }
-
-     
+    }    
 }
