@@ -29,21 +29,24 @@
 		</a>
 
 		<!--MA Menu de la pagina -->
-		{% if app.user %}
-			{% if is_granted('ROLE_ADMIN') %}
+		{% if app.user %} <!-- si un usuario tiene todos los atributos establecidos -->
+			{% if is_granted('ROLE_ADMIN') %}	<!-- si es role_admin se ejecuta el if -->
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-primary btn-lg">Mostrar perfil</button>
 				</div>
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_productos_new')}}'" type="button" class="btn btn-primary btn-lg">Crear Producto</button>
 				</div>
-			{% else %}	
+
+			{% else %} <!-- se ejecuta si es un user normal -->	
 				<div class="d-flex justify-content-center mx-4 ">
 					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-primary btn-lg">Mostrar perfil</button>
 				</div>	
-			{% endif %}
+
+			{% endif %} <!-- se ejecuta para los dos, el nombre del usuario registrado -->
 				<br><p>{{app.user.nombre}}</p>
-		{% else %}
+
+		{% else %} <!-- esto se ejecuta si no está registrado el usuario -->
 			<div class="d-flex justify-content-center mx-4 ">
 				<button onclick="window.location.href='/login'" type="button" class="btn btn-primary btn-lg">Iniciar Sesión</button>
 			</div>
