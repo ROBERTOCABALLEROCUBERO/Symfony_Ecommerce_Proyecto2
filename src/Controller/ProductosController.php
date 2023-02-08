@@ -46,9 +46,11 @@ class ProductosController extends AbstractController
      */
     public function new(Request $request, ProductosRepository $productosRepository): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podra acceder y será enviado a la pagina de login
             return $this->redirectToRoute('app_login'); 
         }
+
+
         $producto = new Productos();
         $form = $this->createForm(Productos1Type::class, $producto);
         $form->handleRequest($request);
@@ -80,9 +82,11 @@ class ProductosController extends AbstractController
      */
     public function edit(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podrá acceder y será enviado a la principal
             return $this->redirectToRoute('app_login'); 
         }
+
+
         $form = $this->createForm(Productos1Type::class, $producto);
         $form->handleRequest($request);
 
@@ -103,9 +107,11 @@ class ProductosController extends AbstractController
      */
     public function delete(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {  //MA Si el usuario no es administrador no podra acceder y será enviado a la principal
+        if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podra acceder y será enviado a la pagina de login 
             return $this->redirectToRoute('app_login'); 
         }
+
+
         if ($this->isCsrfTokenValid('delete'.$producto->getId(), $request->request->get('_token'))) {
             $productosRepository->remove($producto, true);
         }

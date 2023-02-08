@@ -28,7 +28,7 @@
 			</svg>
 		</a>
 
-		<!--MA Menu de la pagina -->
+		<!--MA 1.7 Menu de la pagina dependiendo del tipo de usuario -->
 		{% if app.user %} <!-- si un usuario tiene todos los atributos establecidos -->
 			{% if is_granted('ROLE_ADMIN') %}	<!-- si es role_admin se ejecuta el if -->
 				<div class="d-flex justify-content-center mx-4 ">
