@@ -28,13 +28,9 @@
 	{% block javascripts %}
 
 	{% if app.flashes('error') %}
-
-	<script>
-	
-	alert("Ha ocurrido algun error");
-	
-	
-	</script>
+		<script>
+			alert("Ha ocurrido algun error");
+		</script>
 	{% endif %}
 		{% endblock %}
 

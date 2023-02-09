@@ -74,6 +74,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $direccion;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Preguntas::class, mappedBy="usuario_id")
+     */
+    private $preguntas;
+
+    public function __construct()
+    {
+        $this->preguntas = new ArrayCollection();
+    }
+
 
     
 
@@ -246,6 +256,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Preguntas>
+     */
+    public function getPreguntas(): Collection
+    {
+        return $this->preguntas;
+    }
+
+    public function addPregunta(Preguntas $pregunta): self
+    {
+        if (!$this->preguntas->contains($pregunta)) {
+            $this->preguntas[] = $pregunta;
+            $pregunta->setUsuarioId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePregunta(Preguntas $pregunta): self
+    {
+        if ($this->preguntas->removeElement($pregunta)) {
+            // set the owning side to null (unless already changed)
+            if ($pregunta->getUsuarioId() === $this) {
+                $pregunta->setUsuarioId(null);
+            }
+        }
 
         return $this;
     }
