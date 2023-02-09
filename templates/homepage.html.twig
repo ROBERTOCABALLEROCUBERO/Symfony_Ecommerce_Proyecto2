@@ -20,7 +20,7 @@
 			{% for producto in productsChunk %}
 				<div class="col-sm-3 mb-4">
 					<div class="card">
-						<img src="#" alt="{{ producto.nombreProd }}" class="card-img-top">
+						<img src="{{ asset('img/' ~ producto.fotoprod) }}" alt="{{ producto.nombreProd }}" class="card-img-top">
 						<div class="card-body">
 							<h5 class="card-title">{{ producto.nombreProd }}</h5>
 							<p class="card-text">{{ producto.descuento }}
