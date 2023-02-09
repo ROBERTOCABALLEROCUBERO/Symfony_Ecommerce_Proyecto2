@@ -122,10 +122,10 @@ class ProductosController extends AbstractController
      */
     public function getProductImage($id, ProductosRepository $productosRepository)
     {
-$producto = $productosRepository->findOneByid($id);
+        $producto = $productosRepository->findOneByid($id);
         // Obtener la ruta de la imagen
 
-$ruta = '../public/img/'.$producto->getfotoprod();
+        $ruta = '../public/img/'.$producto->getfotoprod();
 
         // Verificar si la imagen existe
         if (!file_exists($ruta)) {
