@@ -18,7 +18,7 @@ class ProductosController extends AbstractController
 
     /**
      * @Route("/", name="app_homepage", methods={"GET"})
-    */
+     */
 
     public function homepage(ProductosRepository $productosRepository)
     {
@@ -29,8 +29,7 @@ class ProductosController extends AbstractController
         return $this->render('homepage.html.twig', [
             'ofertaProductosChunked' => $ofertaProductosChunked
         ]);
-       
-    } 
+    }
     /**
      * @Route("/", name="app_productos_index", methods={"GET"})
      */
@@ -47,7 +46,7 @@ class ProductosController extends AbstractController
     public function new(Request $request, ProductosRepository $productosRepository): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podra acceder y será enviado a la pagina de login
-            return $this->redirectToRoute('app_login'); 
+            return $this->redirectToRoute('app_login');
         }
 
 
@@ -83,7 +82,7 @@ class ProductosController extends AbstractController
     public function edit(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podrá acceder y será enviado a la principal
-            return $this->redirectToRoute('app_login'); 
+            return $this->redirectToRoute('app_login');
         }
 
 
@@ -108,14 +107,35 @@ class ProductosController extends AbstractController
     public function delete(Request $request, Productos $producto, ProductosRepository $productosRepository): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {  //MA 1.6 Si el usuario no es administrador no podra acceder y será enviado a la pagina de login 
-            return $this->redirectToRoute('app_login'); 
+            return $this->redirectToRoute('app_login');
         }
 
 
-        if ($this->isCsrfTokenValid('delete'.$producto->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $producto->getId(), $request->request->get('_token'))) {
             $productosRepository->remove($producto, true);
         }
 
         return $this->redirectToRoute('app_productos_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/producto/{id}/imagen", name="get_product_image")
+     */
+    public function getProductImage($id, ProductosRepository $productosRepository)
+    {
+$producto = $productosRepository->findOneByid($id);
+        // Obtener la ruta de la imagen
+
+$ruta = '../public/img/'.$producto->getfotoprod();
+
+        // Verificar si la imagen existe
+        if (!file_exists($ruta)) {
+            throw $this->createNotFoundException('Image not found');
+        }
+
+        // Enviar la imagen al navegador
+        $image = file_get_contents($ruta);
+        $response = new Response($image);
+        $response->headers->set('Content-Type', 'image/png');
+        return $response;
     }
 }

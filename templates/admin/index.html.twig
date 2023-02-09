@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		{% for producto in productos %}
+			<div class="col-md-4">
+				<img src="{{ asset('img/' ~ producto.fotoprod) }}" alt="Imagen de producto" style="width:200px; height:200px;">
+				<p>{{ producto.id }}</p>
+				<p>{{ producto.nombreProd }}</p>
+				<form action="{{ path('app_admin') }}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="productoId" value="{{ producto.id }}">
+					<input type="file" name="imageFile">
+					<input type="submit" value="Update Image">
+				</form>
+				{% for message in app.flashes('error') %}
+					{{ message }}
+				{% endfor %}
+				<a href="{{ path('get_product_image', {'id': producto.id}) }}">
+					<button>Ver Imagen</button>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}
