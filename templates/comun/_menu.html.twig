@@ -4,6 +4,56 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Inicio</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/productos">Productos</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_about_us')}}">Sobre nosotros</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('app_contacto') }}">Contacto</a>
+			</li>
+		</ul>
+	</div>
+	<div class="navbar-nav">
+		<a class="bi bi-cart" href="{{path('app_carrito')}}" style="color:#02386e">
+			<i class="fas fa-shopping-cart"></i>
+		</a>
+	</div>
+
+{% if app.user %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="navbar-nav ml-4">
+			<a href="{{ path('app_user_show', {'id': app.user.id}) }}" class="nav-link">Mostrar perfil</a>
+		</div>
+		<div class="navbar-nav ml-4">
+			<a href="{{ path('app_productos_new')}}" class="nav-link">Crear Producto</a>
+		</div>
+	{% else %}
+		<div class="navbar-nav ml-4">
+			<a href="{{ path('app_user_show', {'id': app.user.id}) }}" class="nav-link">Mostrar perfil</a>
+		</div>
+	{% endif %}
+{% else %}
+	<div class="navbar-nav ml-4">
+		<a href="/login" class="nav-link">Iniciar Sesión</a>
+	</div>
+	<div class="navbar-nav ml-4">
+		<a href="/register" class="nav-link">Registrate</a>
+	</div>
+{% endif %}
+</nav>
+
+{# <nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand" href="#">Artist Shop</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
 			<li class="nav-item active">
 				<a class="nav-link" href="/">Inicio</a>
@@ -17,45 +67,35 @@
 			<li class="nav-item">
 				<a class="nav-link" href="{{ path('app_contacto') }}">Contacto</a>
 			</li>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</ul>
+		</ul>
+	</div>
+	<div class="collapse navbar-collapse" id="navbarNav">
+	<a class="bi bi-cart" href="{{path('app_carrito')}}" style="color:#02386e">
+	<i class="fas fa-shopping-cart"></i>
+	</a>
+
+<!--MA 1.7 Menu de la pagina dependiendo del tipo de usuario -->
+{% if app.user %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="d-flex justify-content-center mx-4">
+			<a href="{{ path('app_user_show', {'id': app.user.id}) }}" class="nav-link">Mostrar perfil</a>
 		</div>
-		<a class="bi bi-cart" href="{{path('app_carrito')}}" style="color:#02386e">
-			<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewbox="0 0 16 16">
-				<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-			</svg>
-		</a>
+		<div class="d-flex justify-content-center mx-4">
+			<a href="{{ path('app_productos_new')}}" class="nav-link">Crear Producto</a>
+		</div>
+	{% else %}
+		<div class="d-flex justify-content-center mx-4">
+			<a href="{{ path('app_user_show', {'id': app.user.id}) }}" class="nav-link">Mostrar perfil</a>
+		</div>
+	{% endif %}
+{% else %}
+		<div class="d-flex justify-content-center mx-4">
+			<a href="/login" class="btn btn-dark btn-lg">Iniciar Sesión</a>
+		</div>
+		<div class="d-flex justify-content-center mx-4">
+			<a href="/register" class="btn btn-dark btn-lg">Registrate</a>
+		</div>
+	{% endif %}
 
-		<!--MA 1.7 Menu de la pagina dependiendo del tipo de usuario -->
-		{% if app.user %} <!-- si un usuario tiene todos los atributos establecidos -->
-			{% if is_granted('ROLE_ADMIN') %}	<!-- si es role_admin se ejecuta el if -->
-				<div class="d-flex justify-content-center mx-4 ">
-					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-dark btn-lg">Mostrar perfil</button>
-				</div>
-
-				<div class="d-flex justify-content-center mx-4 ">
-					<button onclick="window.location.href='{{ path('app_productos_new')}}'" type="button" class="btn btn-dark btn-lg">Crear Producto</button>
-				</div>
-
-			{% else %} <!-- se ejecuta si es un user normal -->	
-				<div class="d-flex justify-content-center mx-4 ">
-					<button onclick="window.location.href='{{ path('app_user_show', {'id': app.user.id}) }}'" type="button" class="btn btn-dark btn-lg">Mostrar perfil</button>
-				</div>	
-
-			{% endif %} <!-- se ejecuta para los dos, el nombre del usuario registrado -->
-				<br><p>{{app.user.nombre}}</p>
-
-		{% else %} <!-- esto se ejecuta si no está registrado el usuario -->
-			<div class="d-flex justify-content-center mx-4 ">
-				<button onclick="window.location.href='/login'" type="button" class="btn btn-dark btn-lg">Iniciar Sesión</button>
-			</div>
-			<div class="d-flex justify-content-center mx-4 ">
-				<button onclick="window.location.href='/register'" type="button" class="btn btn-dark btn-lg">Registrate</button>
-			</div>
-		{% endif %}
-
-	</nav>
-</form>
-
+</div>
+</nav> #}

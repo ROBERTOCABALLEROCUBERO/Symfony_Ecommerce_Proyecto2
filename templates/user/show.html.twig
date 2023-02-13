@@ -1,47 +1,104 @@
-
 {% extends 'base.html.twig' %}
 
-{% block title %}users{% endblock %}
+{% block title %}users
+{% endblock %}
+
 
 {% block body %}
+	<div class="container rounded bg-white mt-5 mb-5">
+		<div class="row">
+			<div class="col-md-3 border-right text-center">
+				<img class="rounded-circle mt-5" width="150px" src="">
+				<span class="font-weight-bold">{{ user.nombre }}</span>
+				<span class="text-black-50">{{ user.email }}</span>
+			</div>
+			<div class="col-md-5 border-right">
+				<div class="p-3 py-5">
+					<h4 class="text-right mb-3">Datos Personales</h4>
 
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src=""><span class="font-weight-bold">{{ user.nombre }}</span><span class="text-black-50">{{ user.email }}</span><span> </span></div>
-        </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Datos Personales</h4>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Nombre</label><br>{{ user.nombre }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Apellidos</label><br>{{ user.apellidos }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Contraseña</label><br>{{ user.password }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Email</label><br>{{ user.email }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNac ? user.fechaNac|date('d-m-Y') : '' }}</div><!-- Problema con fechaNac-->
-                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-                        <h4 class="text-right">Datos Bancarios</h4>
-                    </div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Numero de Tarjeta</label><br>{{ user.numTar }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Titular</label><br>{{ user.titular }}</div>
-                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Codigo de Seguridad</label><br>{{ user.codSeg}}</div>
-                    <div class="col-md-12"><label class="labels font-weight-bold">Direccion</label><br>{{ user.direccion }}</div>
-                </div>
-                <a href="{{ path('app_user_index') }}" class="mt-5 text-center">Iniciar Sesion</a>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Editar Perfil</button></div>
-            
-                <!-- Boton de borrar perfil -->
-                <div class="mt-3 text-center"> {{ include('user/_delete_form.html.twig') }}</div>
-                
-                <!-- Boton de cerrar sesión -->
-                <a class="btn btn-secondary" href="{{ path('app_logout') }}">Cerrar sesión</a>
+					<div class="row mt-3">
+						<div class="col-md-12 mb-3">
+							<label class="labels font-weight-bold">Nombre</label><br>{{ user.nombre }}
+						</div>
+						<div class="col-md-12 mb-3">
+							<label class="labels font-weight-bold">Apellidos</label><br>{{ user.apellidos }}
+						</div>
+						<div class="col-md-12 mb-3">
+							<label class="labels font-weight-bold">Email</label><br>{{ user.email }}
+						</div>
+						<div class="col-md-12 mb-3">
+							<label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNac ? user.fechaNac|date('d-m-Y') : '' }}
+						</div>
+					</div>
+					<div class="mt-5 text-center">
+						<button class="btn btn-primary profile-button" type="button" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">
+							Editar Perfil
+						</button>
 
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
+
+					</div>
+
+
+					<div class="d-flex justify-content-center mt-3">
+						<a class="btn btn-secondary mr-3" href="{{ path('app_logout') }}">Cerrar sesión</a>
+						<a href="{{ path('app_listar_compras') }}" class="btn btn-primary">Ver Compras</a>
+					</div>
+					<div class="mt-3 text-center">
+						{{ include('user/_delete_form.html.twig') }}
+					</div>
+
+					{# <div class="mt-5 text-center">
+																					<button class="btn btn-primary profile-button" type="button" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">
+																						Editar Perfil
+																					</button>
+																				</div>
+															
+																				<div class="mt-3 text-center">
+																					{{ include('user/_delete_form.html.twig') }}
+															                    </div>
+															
+																				<a class="btn btn-secondary mt-3" href="{{ path('app_logout') }}">Cerrar sesión</a>
+																				<a href="{{ path('app_listar_compras') }}" class="btn btn-primary mt-3">Ver Compras</a> #}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{# 
+				<div class="container rounded bg-white mt-5 mb-5">
+				    <div class="row">
+				        <div class="col-md-3 border-right">
+				            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src=""><span class="font-weight-bold">{{ user.nombre }}</span><span class="text-black-50">{{ user.email }}</span><span> </span></div>
+				        </div>
+				        <div class="col-md-5 border-right">
+				            <div class="p-3 py-5">
+				                <div class="d-flex justify-content-between align-items-center mb-3">
+				                    <h4 class="text-right">Datos Personales</h4>
+				                </div>
+				                <div class="row mt-3">
+				                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Nombre</label><br>{{ user.nombre }}</div>
+				                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Apellidos</label><br>{{ user.apellidos }}</div>
+				                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">Email</label><br>{{ user.email }}</div>
+				                    <div class="col-md-12 mb-3"><label class="labels font-weight-bold">FechaNacimiento</label><br>{{ user.fechaNac ? user.fechaNac|date('d-m-Y') : '' }}</div><!-- Problema con fechaNac-->
+				                    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+				                        <h4 class="text-right">Datos Bancarios</h4>
+				                    </div>
+				                </div>
+				                <a href="{{ path('app_user_index') }}" class="mt-5 text-center">Iniciar Sesion</a>
+				                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Editar Perfil</button></div>
+				            
+				                <!-- Boton de borrar perfil -->
+				                <div class="mt-3 text-center"> {{ include('user/_delete_form.html.twig') }}</div>
+				                
+				                <!-- Boton de cerrar sesión -->
+				                <a class="btn btn-secondary" href="{{ path('app_logout') }}">Cerrar sesión</a>
+				<a href="{{ path('app_listar_compras') }}" class="btn btn-primary">Ver Compras</a>
+				
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				</div>
+				</div> #}
 {% endblock %}
