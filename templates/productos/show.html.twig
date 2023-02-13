@@ -34,9 +34,41 @@
     </div>
 </div>
 
-
         <!-- MA Boton para borrar producto admin -->
 	    {{ include('productos/_delete_form.html.twig') }}
+        
+        {% if is_granted('ROLE_USER') %} <!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
+            
+            <form>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Escribe tu pregunta o una palabra clave">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <div class="d-flex align-items-center">
+                <img src="ruta/a/la/imagen.jpg" alt="Imagen de usuario" class="mr-3">
+                <div>
+                    <h5 class="mb-0">{{preguntas.usuario_id}}</h5> 
+                    <small class="text-muted"> - {{preguntas.fecha}}</small>
+                </div>
+            </div>
+            {% if is_granted('ROLE_ADMIN') or pregunta.usuario_id == app.user %} <!-- Alex| Si es admin o el propietario de la pregunta podra borrar la pregunta -->
+                <button type="button" class="btn btn-danger">Eliminar Pregunta</button>
+            {% endif %}
+        {% endif %}
+
+        {% if is_granted('ROLE_USER') %} <!-- Alex| si es un usuario registrado se motrara -->
+            <div class="form-group">
+                <label for="pregunta">Pregunta:</label>
+                <textarea class="form-control" id="pregunta" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar pregunta</button>
+        {% endif %}
         
 		<a href="{{ path('app_productos_index') }}">Ver mas productos</a>
 
