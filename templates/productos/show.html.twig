@@ -3,67 +3,86 @@
 {% block title %}Productos
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('form#pregunta-form').on('submit', function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        // Agregar el código necesario para mostrar la pregunta en la página sin tener que recargarla.
+                        $('#lista-preguntas').append(response);
+                        $('#pregunta-form')[0].reset();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto">
-        </div>
-        <div class="col-md-8">
-            <h5 class="mt-3">{{ producto.nombreProd }}</h5>
-            <p class="mt-3">
-                <strong>Genero:</strong> {{ producto.genero }} <br>
-                <strong>Precio:</strong> {{ producto.precio }} <br>
-                <strong>Descuento:</strong> {{ producto.descuento }} <br>
-                <strong>Talla:</strong> {{ producto.talla }} <br>
-                <strong>Tipo:</strong> {{ producto.tipo }}
-            </p>
-            <form action="{{ path('app_carrito', {'id': producto.id}) }}" method="post" class="form-inline mt-3">
-                <div class="form-group mr-3">
-                    <label for="cantidad">Cantidad:</label>
-                    <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1">
-                </div>
-                <input type="submit" class="btn btn-primary" value="Agregar al carrito">
-            </form>
-        </div>
-    </div>
-</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto">
+			</div>
+			<div class="col-md-8">
+				<h5 class="mt-3">{{ producto.nombreProd }}</h5>
+				<p class="mt-3">
+					<strong>Genero:</strong>
+					{{ producto.genero }}
+					<br>
+					<strong>Precio:</strong>
+					{{ producto.precio }}
+					<br>
+					<strong>Descuento:</strong>
+					{{ producto.descuento }}
+					<br>
+					<strong>Talla:</strong>
+					{{ producto.talla }}
+					<br>
+					<strong>Tipo:</strong>
+					{{ producto.tipo }}
+				</p>
+				<form action="{{ path('app_carrito', {'id': producto.id}) }}" method="post" class="form-inline mt-3">
+					<div class="form-group mr-3">
+						<label for="cantidad">Cantidad:</label>
+						<input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1">
+					</div>
+					<input type="submit" class="btn btn-primary" value="Agregar al carrito">
+				</form>
+				{% if is_granted('ROLE_USER') %}
+					<form action="{{ path('app_preguntas', {'id': producto.id}) }}" id="pregunta-form" method="post">
+						<div class="form-group">
+							<label for="pregunta">Deja una pregunta:</label>
+							<textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Enviar">
+					</form>
+					<ul id="lista-preguntas">
+						{# Aquí se mostrarán las preguntas mediante AJAX #}
+					</ul>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 
+	{% if is_granted('ROLE_ADMIN') %}
+		{{ include('productos/_delete_form.html.twig') }}
+	{% endif %}
+	<!-- MA Boton para borrar producto admin -->
 
-        <!-- MA Boton para borrar producto admin -->
-        
-        {# {% if is_granted('ROLE_USER') %}  #}<!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
-            {{ include('productos/_delete_form.html.twig') }}
-            {# <form>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Escribe tu pregunta o una palabra clave">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Buscar</button>
-                    </div>
-                </div>
-            </form>
-            <div class="d-flex align-items-center">
-                <img src="ruta/a/la/imagen.jpg" alt="Imagen de usuario" class="mr-3">
-                <div>
-                    <h5 class="mb-0">{{preguntas.usuario_id}}</h5> 
-                    <small class="text-muted"> - {{preguntas.fecha}}</small>
-                </div>
-            </div>
-            {% if is_granted('ROLE_ADMIN') or pregunta.usuario_id == app.user %} <!-- Alex| Si es admin o el propietario de la pregunta podra borrar la pregunta -->
-                <button type="button" class="btn btn-danger">Eliminar Pregunta</button>
-            {% endif %}
-        {% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
+		{{ include('productos/_delete_form.html.twig') }}
 
-        {% if is_granted('ROLE_USER') %} <!-- Alex| si es un usuario registrado se motrara -->
-            <div class="form-group">
-                <label for="pregunta">Pregunta:</label>
-                <textarea class="form-control" id="pregunta" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar pregunta</button>
-        {% endif %}
-        
-		<a href="{{ path('app_productos_index') }}">Ver mas productos</a> #}
+	{% endif %}
+
+	
 {% endblock %}

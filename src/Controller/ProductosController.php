@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Preguntas;
 
 /**
  * @Route("/productos")
@@ -69,8 +70,9 @@ class ProductosController extends AbstractController
     /**
      * @Route("/{id}", name="app_productos_show", methods={"GET"})
      */
-    public function show(Productos $producto): Response
+    public function show(Productos $producto, Request $request, ProductosRepository $productosRepository): Response
     {
+        
         return $this->render('productos/show.html.twig', [
             'producto' => $producto,
         ]);
