@@ -37,7 +37,7 @@ public function index(Request $request, ProductosRepository $productosRepository
         'fecha' => $pregunta->getFecha()->format('d/m/Y'),
         'usuario' => $pregunta->getUsuarioId()->getUserIdentifier(),
     ];
-    return $this->redirectToRoute('app_productos_show', ['id' => $productos->getId(), new JsonResponse($data)]);
+    return $this->redirectToRoute('app_productos_show', ['id' => $productos->getId(),  'respuesta' => new JsonResponse($data)]);
 
     }
 }
