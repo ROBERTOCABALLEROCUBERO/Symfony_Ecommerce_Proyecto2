@@ -1,27 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello ListarComprasController!{% endblock %}
-
 {% block body %}
-<div class="card-columns">
+
+<div class="container">
   {% for pedido in pedidos %}
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Pedido {{ pedido.id }}</h5>
-      <p class="card-text">
-        <b>User Id:</b> {{ pedido.userId }} <br>
-        <b>Lista de Productos:</b> <br>
+    <div class="card mb-3">
+      <div class="card-header">
+        Pedido: {{ pedido.id }}
+      </div>
+      <ul class="list-group list-group-flush">
         {% for product in pedido.listaProd %}
-        {{ product.nombreProducto }} - {{ product.cantidad }} - {{ product.precio }} <br>
+          <li class="list-group-item">{{ product.nombreProducto }} | Cantidad: {{ product.cantidad }} | Precio: {{ product.precio }}</li>
         {% endfor %}
-      </p>
-      <form action="{{ path('app_devolver') }}" method="GET">
-        <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
-        <button type="submit" class="btn btn-danger">Devolver</button>
-      </form>
+      </ul>
+      <div class="card-body">
+        <form action="{{ path('app_devolver') }}" method="GET">
+          <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
+          <button type="submit" class="btn btn-danger">Devolver</button>
+        </form>
+      </div>
     </div>
-  </div>
   {% endfor %}
 </div>
-
 {% endblock %}

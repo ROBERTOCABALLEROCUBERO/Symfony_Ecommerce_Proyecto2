@@ -35,8 +35,47 @@
 			</div>
 		</div>
 	</div>
+	<div class="d-flex justify-content-center my-5 pagination"></div>
 {% endblock %}
 
+{% block javascripts %}
+
+<script>
+	function showPage(page) { // Obtener todos los productos
+		const products = document.querySelectorAll('.col-12.col-md-4');
+		
+		// Recorrer todos los productos
+		for (let i = 0; i < products.length; i++) { 
+			// Mostrar solo los 9 productos de la página actual
+			if (i >= (page - 1) * 9 && i < page * 9) {
+				products[i].style.display = 'block';
+				// Añadir una transición suave para que no sea tan inmediato
+				products[i].style.transition = 'opacity 0.3s';
+			} else {
+				products[i].style.display = 'none';
+			}
+		}
+	}
+
+	window.addEventListener('load', () => {
+		showPage(1);
+		const totalProducts = document.querySelectorAll('.col-12.col-md-4').length;
+		
+		// Calcular el número total de páginas
+		const totalPages = Math.ceil(totalProducts / 9);
+		
+		// Crear los botones de página
+		for (let i = 1; i <= totalPages; i++) {
+			const button = document.createElement('button');
+			button.innerHTML = i;
+			button.classList.add('btn', 'btn-secondary', 'mr-2');
+			button.addEventListener('click', () => {
+				showPage(i);
+			});
+			document.querySelector('.pagination').appendChild(button);
+		}
+	});
+</script>{% endblock %}
 {# 
 {% block body %}
 	<div class="row mt-5 mb-5">

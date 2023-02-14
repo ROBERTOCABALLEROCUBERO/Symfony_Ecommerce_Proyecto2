@@ -1,4 +1,7 @@
-<form method="post" action="{{ path('app_productos_delete', {'id': producto.id}) }}" onsubmit="return confirm('¿Esta seguro de querer borrarlo?');">
+<form method="post" action="{{ path('app_productos_delete', {'id': producto.id}) }}" onsubmit="return confirm('¿Estás seguro de querer borrarlo?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ producto.id) }}">
-    <button class="btn"><i class="fas fa-trash-alt"></i></button>
+    <div class="text-center" style="margin-top: 20px; margin-bottom: 20px;">
+        <button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>
+    </div>
 </form>
+

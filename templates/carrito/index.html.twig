@@ -2,34 +2,50 @@
 
 {% block title %}Hello CarritoController!
 {% endblock %}
-
 {% block body %}
 
-
-	{% for item in carrito %}
-		<p>
-			{{item.nombreProducto}}</p>
-		<p>
-			{{item.precio}}</p>
-      <p>
-			{{item.cantidad}}</p>
-	<form action="{{ path('app_eliminar_producto', {'id': item.id}) }}" method="post">
-			<input type="submit" value="Eliminar">
-		</form>   
-<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'add'}) }}" method="post">
-  <input type="submit" value="+">
-</form>
-<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'sub'}) }}" method="post">
-  <input type="submit" value="-">
-</form>
-	{% endfor %}
-	<p>El total del precio es:
-		{{precio}}</p>
-</div>
-<form action="{{ path('app_listar_compras') }}" method="post">
-	<input type="submit" value="Comprar">
-  
-</form>
-<form action="{{ path('app_limpiar_carrito') }}" method="post">
-  <input type="submit" value="Limpiar Carrito">
-</form>{% endblock %}
+	<div class="container mt-5">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Nombre del producto</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Cantidad</th>
+					<th scope="col">Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in carrito %}
+					<tr>
+						<td>{{item.nombreProducto}}</td>
+						<td>{{item.precio}}</td>
+						<td>{{item.cantidad}}</td>
+						<td>
+							<div class="d-flex">
+								<form action="{{ path('app_eliminar_producto', {'id': item.id}) }}" method="post">
+									<input type="submit" value="Eliminar" class="btn btn-danger btn-sm">
+								</form>
+								<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'add'}) }}" method="post">
+									<input type="submit" value="+" class="btn btn-primary btn-sm ml-2">
+								</form>
+								<form action="{{ path('app_actualizar_cantidad', {'id': item.id, 'cantidad': item.cantidad, 'op': 'sub'}) }}" method="post">
+									<input type="submit" value="-" class="btn btn-primary btn-sm ml-2">
+								</form>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<p class="mt-3 font-weight-bold">El total del precio es:
+			{{precio}}</p>
+		<div class="d-flex justify-content-between mt-3">
+			<form action="{{ path('app_listar_compras') }}" method="post">
+				<input type="submit" value="Comprar" class="btn btn-success">
+			</form>
+			<form action="{{ path('app_limpiar_carrito') }}" method="post">
+				<input type="submit" value="Limpiar Carrito" class="btn btn-warning">
+			</form>
+		</div>
+	</div>
+{% endblock %}

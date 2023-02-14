@@ -1,0 +1,16 @@
+body {
+    position: relative;
+}
+
+main {
+    min-height: calc(100vh - 140px);
+}
+
+footer {
+    background-color: black;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    margin-top: 10%;
+}
