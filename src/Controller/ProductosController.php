@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Productos;
 use App\Form\Productos1Type;
 use App\Repository\ProductosRepository;
@@ -67,12 +68,38 @@ class ProductosController extends AbstractController
         ]);
     }
 
+
+
+
+
+
+
     /**
      * @Route("/{id}", name="app_productos_show", methods={"GET"})
      */
     public function show(Productos $producto, Request $request, ProductosRepository $productosRepository): Response
     {
-        
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get("id");
+            $texto = $request->request->get('pregunta');
+            $pregunta = new Preguntas();
+            $pregunta->setFecha(new \DateTime());
+            $user = $this->getUser();
+            $userId = $user->getId();
+            $pregunta->setUsuarioId($userId);
+            $pregunta->setTexto($texto);
+            $pregunta->setProductosId($id);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pregunta);
+            $entityManager->flush();
+            $data = [
+                'pregunta' => $pregunta->getTexto(),
+                'fecha' => $pregunta->getFecha()->format('d/m/Y'),
+                'usuario' => $userId,
+            ];
+            return new JsonResponse($data);
+        }
+
         return $this->render('productos/show.html.twig', [
             'producto' => $producto,
         ]);
@@ -127,7 +154,7 @@ class ProductosController extends AbstractController
         $producto = $productosRepository->findOneByid($id);
         // Obtener la ruta de la imagen
 
-        $ruta = '../public/img/'.$producto->getfotoprod();
+        $ruta = '../public/img/' . $producto->getfotoprod();
 
         // Verificar si la imagen existe
         if (!file_exists($ruta)) {

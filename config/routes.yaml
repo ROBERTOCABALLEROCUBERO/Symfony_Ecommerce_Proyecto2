@@ -6,7 +6,6 @@ app_homepage:
     controller: App\Controller\ProductosController::homepage
     methods: GET
 
-
 app_iniciosesion:
     path: /usuario/login
     controller: App\Controller\UsuariosController::index
@@ -16,5 +15,7 @@ app_showuser:
     path: /usuario
     controller: App\Controller\UsuariosController::show
     methods: GET
+
+
 
     
