@@ -6,30 +6,30 @@
 {% block javascripts %}
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
 
-$(document).ready(function () {
-  $('#pregunta-form').submit(function (e) {
-    e.preventDefault();
-    var formData = $(this).serialize();
-    $.ajax({
-      type: 'POST',
-      url: "{{ path('app_productos_show', {'id': producto.id}) }}",
-      data: formData,
-      success: function (data) {
-        var comentarioHtml = '<div class="media mt-4">';
-        comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">';
-        comentarioHtml += '<div class="media-body">';
-        comentarioHtml += '<h5 class="mt-0">' + data.usuario + '</h5>';
-        comentarioHtml += '<p>' + data.pregunta + '</p>';
-        comentarioHtml += '<small>' + data.fecha + '</small>';
-        comentarioHtml += '</div>';
-        comentarioHtml += '</div>';
-        $('#preguntas-comentarios').append(comentarioHtml);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log("Ha ocurrido un error en la solicitud AJAX: " + textStatus + " - " + errorThrown);
-      }
-    });
-  });
+		$(document).ready(function () {
+$('#pregunta-form').submit(function (e) {
+e.preventDefault();
+var formData = $(this).serialize();
+$.ajax({
+type: 'POST',
+url: "{{ path('app_productos_show', {'id': producto.id}) }}",
+data: formData,
+success: function (data) {
+var comentarioHtml = '<div class="media mt-4">';
+comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">';
+comentarioHtml += '<div class="media-body">';
+comentarioHtml += '<h5 class="mt-0">' + data.usuario + '</h5>';
+comentarioHtml += '<p>' + data.pregunta + '</p>';
+comentarioHtml += '<small>' + data.fecha + '</small>';
+comentarioHtml += '</div>';
+comentarioHtml += '</div>';
+$('#preguntas-comentarios').append(comentarioHtml);
+},
+error: function (jqXHR, textStatus, errorThrown) {
+console.log("Ha ocurrido un error en la solicitud AJAX: " + textStatus + " - " + errorThrown);
+}
+});
+});
 });
 console.log(data)
 	</script>
@@ -74,6 +74,46 @@ console.log(data)
 					</form>
 				{% endif %}
 				<div id="preguntas-respuestas">
+					<div class="container">
+						<div class="container mt-4">
+							<h5>Preguntas y respuestas de clientes</h5>
+							<hr>
+							<p class="small text-muted">
+								Encuentra respuestas en la información del producto, en preguntas y respuestas y en reseñas.
+							</p>
+						</div>
+						<div class="container mt-4">
+
+							<form>
+								<div class="input-group mb-3 mt-4">
+									<input type="text" class="form-control" placeholder="Escribe tu pregunta o palabra clave" aria-describedby="button-addon2">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button" id="button-addon2">
+											<i class="fa fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Comentarios</h5>
+								<hr>
+								<div class="container mt-4">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title">Pregunta:</h5>
+											<p class="card-text">¿Cómo puedo cambiar mi contraseña?</p>
+											<hr>
+											<h5 class="card-title">Respuesta:</h5>
+											<p class="card-text">Para cambiar tu contraseña, ve a tu perfil y selecciona la opción de "Cambiar contraseña". Allí podrás ingresar tu nueva contraseña y confirmarla.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="card mt-4">
 						<div class="card-body">
 							<h5 class="card-title">Respuestas</h5>
@@ -85,7 +125,7 @@ console.log(data)
 		</div>
 	</div>
 
-	
+
 	<!-- MA Boton para borrar producto admin -->
 
 	{% if is_granted('ROLE_ADMIN') %}
