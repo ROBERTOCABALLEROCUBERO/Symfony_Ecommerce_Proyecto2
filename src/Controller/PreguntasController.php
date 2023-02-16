@@ -60,7 +60,7 @@ class PreguntasController extends AbstractController
         $id = $request->get("id");
         $borrar = $preguntasRepository->borrar($id);
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($borrar);
+        $entityManager->remove($pregunta); // He cambiado esto para ver si se borra la pregunta
         $entityManager->flush();
 
         // Retorna una respuesta de éxito

@@ -71,8 +71,27 @@ $('#preguntas-comentarios').append(comentarioHtml)
 						<input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí"/>
 						<button type="submit" id="pregunta-submit">Enviar pregunta</button>
 						{% if app.user == question.user or is_granted('ROLE_ADMIN') %}
-							<!-- Si es el propietario de la pregunta o el administrados podra borrar la pregunta-->
-							{{ include('preguntas/_delete_form.html.twig') }}
+							<!-- Si es el propietario de la pregunta o el administrador podra borrar la pregunta-->
+							<button class="btn btn-danger" data-formulario-id="{{ formulario.id }}">Borrar Pregunta</button>
+							<!-- Script para borrar la pregunta -->
+							<script>
+								$(document).ready(function () {
+$('.eliminar-formulario').on('click', function () {
+var formularioId = $(this).data('formulario-id');
+$.ajax({
+url: '{{ path('preguntas_borrar', { 'id': 'FORMULARIO_ID' }) }}'.replace('FORMULARIO_ID', formularioId),
+type: 'DELETE',
+success: function (data) {
+alert(data.mensaje);
+window.location.reload();
+},
+error: function (xhr, textStatus, errorThrown) { // Hay error
+alert('Error al eliminar el formulario.');
+}
+});
+});
+});
+							</script>
 						{% endif %}
 					</form>
 				{% endif %}
@@ -93,32 +112,45 @@ $('#preguntas-comentarios').append(comentarioHtml)
 												<small class="text-muted">{{ pregunta.fecha|date('d/m/Y') }}</small>
 											</h4>
 											<p>{{ pregunta.texto }}</p>
-											<div class="media-footer">
-												<a href="#" class="btn btn-default btn-sm">
-													<i class="fas fa-thumbs-up"></i>
-													Me gusta</a>
-												<a href="#" class="btn btn-default btn-sm">
-													<i class="fas fa-thumbs-down"></i>
-													No me gusta</a>
-												<a href="#" class="btn btn-default btn-sm">
-													<i class="fas fa-reply"></i>
-													Responder</a>
-
+											{% for respuesta in respuestas %} <!-- Respuestas -->
+												<div class="media">
+													<a class="pull-left" href="#">
+														<img class="media-object rounded-circle" src="{{ asset('ruta/a/imagen/perfil.jpg') }}" alt="...">
+													</a>
+													<div class="media-body">
+														<h4 class="media-heading">{{ respuesta.getUsuarioId().getNombre() }}
+															<small class="text-muted">{{ respuesta.fecha|date('d/m/Y') }}</small>
+														</h4>
+														<p>{{ respuesta.texto }}</p>
+													</div>
+												</div>
 											</div>
+										{% endfor %}
+										<div class="media-footer">
+											<a href="#" class="btn btn-default btn-sm">
+												<i class="fas fa-thumbs-up"></i>
+												Me gusta</a>
+											<a href="#" class="btn btn-default btn-sm">
+												<i class="fas fa-thumbs-down"></i>
+												No me gusta</a>
+											<a href="#" class="btn btn-default btn-sm">
+												<i class="fas fa-reply"></i>
+												Responder</a>
+
 										</div>
 									</div>
-								{% endfor %}
-							</div>
+								</div>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
-
 			</div>
+
 		</div>
 	</div>
+</div>
 
-	<!-- En caso de que seamos un role admin podemos borrar el producto si no, no aparecería -->
-	{% if is_granted('ROLE_ADMIN') %}
-		{{ include('productos/_delete_form.html.twig') }}
-	{% endif %}
-{% endblock %}
+<!-- En caso de que seamos un role admin podemos borrar el producto si no, no aparecería -->
+{% if is_granted('ROLE_ADMIN') %}
+	{{ include('productos/_delete_form.html.twig') }}
+{% endif %}{% endblock %}
