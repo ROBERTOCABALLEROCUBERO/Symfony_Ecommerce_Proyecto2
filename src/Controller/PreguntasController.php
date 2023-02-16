@@ -28,7 +28,7 @@ class PreguntasController extends AbstractController
 
     public function index(Request $request, ProductosRepository $productosRepository): Response
     {
-        $productos = new Productos();
+        $productos = new Productos(); // Establecemos los datos de la pregunta  en el objeto productos
         $id = $request->get("id");
         $texto = $request->get('pregunta');
         $productos = $productosRepository->findOneByid($id);
@@ -42,7 +42,7 @@ class PreguntasController extends AbstractController
         $entityManager->persist($pregunta);
         $entityManager->flush();
 
-        $data = [
+        $data = [ // Guardamos en data todos los datos para enviarlos a ajax
             'pregunta' => $pregunta->getTexto(),
             'fecha' => $pregunta->getFecha()->format('d/m/Y'),
             'usuario' => $pregunta->getUsuarioId()->getNombre(),

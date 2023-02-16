@@ -33,11 +33,11 @@ class AdminController extends AbstractController
     {
         $productos = $productosRepository->findAll();
     
-        foreach ($productos as $producto) {
+        foreach ($productos as $producto) { 
             if ($request->isMethod('post') && $request->request->get('productoId') == $producto->getId()) {
-                $imageFile = $request->files->get('imageFile');
+                $imageFile = $request->files->get('imageFile'); 
     
-                $errors = $this->validator->validate($imageFile, [
+                $errors = $this->validator->validate($imageFile, [ //
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
@@ -48,7 +48,7 @@ class AdminController extends AbstractController
                     ])
                 ]);
     
-                if (count($errors) == 0 && $imageFile) {
+                if (count($errors) == 0 && $imageFile) { // Si no hay errores se actualiza la imagen
                     $imageFileName = $fileUploader->upload($imageFile);
                     $producto->setfotoprod($imageFileName);
     
@@ -57,7 +57,7 @@ class AdminController extends AbstractController
                     $entityManager->flush();
     
                     return $this->redirectToRoute('app_admin');
-                } else {
+                } else {    // Si hay errores se mostrará el error
                     $this->addFlash('error', 'Please upload a valid image file (jpeg, png)');
                 }
             }

@@ -7,11 +7,11 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
-    $(document).ready(function () {
-      $('#pregunta-form').submit(function (e) {
-        e.preventDefault()
+    $(document).ready(function () { // Evento que se ejecta cuando el documento ha terminado de cargar
+      $('#pregunta-form').submit(function (e) { // Se ejecuta cuando se envia el formulario
+        e.preventDefault() // previene que el formulario se envíe a través de una solicitud POST normal y que utilice ajax en su lugar
         console.log('Formulario enviado')
-        var formData = $(this).serialize()
+        var formData = $(this).serialize() // Los datos del formulario se serializan
         console.log('Datos del formulario: ' + formData)
         $.ajax({
           type: 'POST',
@@ -28,7 +28,7 @@
             comentarioHtml += '</div></div>'
             $('#preguntas-comentarios').append(comentarioHtml)
           }
-        })
+        }) // Envia un formulario de preguntas y actualiza dinámicamente una sección de la página con los comentarios de las preguntas.
       })
     })
   </script>
@@ -107,10 +107,8 @@
     </div>
   </div>
 
-  <!-- MA Boton para borrar producto admin -->
-
   {% if is_granted('ROLE_ADMIN') %}
-    <!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
+    <!-- Alex si es un usuario registrado y hay una pregunta del producto podrá eliminar la pregunta -->
     {{ include('productos/_delete_form.html.twig') }}
   {% endif %}
 {% endblock %}
