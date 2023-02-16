@@ -1,138 +1,116 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Productos
+{% block title %}
+  Productos
 {% endblock %}
-
 {% block javascripts %}
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		$(document).ready(function () {
-$('#pregunta-form').submit(function (e) {
-e.preventDefault();
-var formData = $(this).serialize();
-$.ajax({
-type: 'POST',
-url: "{{ path('app_productos_show', {'id': producto.id}) }}",
-data: formData,
-success: function (data) {
-var comentarioHtml = '<div class="media mt-4">';
-comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">';
-comentarioHtml += '<div class="media-body">';
-comentarioHtml += '<h5 class="mt-0">' + data.usuario + '</h5>';
-comentarioHtml += '<p>' + data.pregunta + '</p>';
-comentarioHtml += '<small>' + data.fecha + '</small>';
-comentarioHtml += '</div>';
-comentarioHtml += '</div>';
-$('#preguntas-comentarios').append(comentarioHtml);
-},
-error: function (jqXHR, textStatus, errorThrown) {
-console.log("Ha ocurrido un error en la solicitud AJAX: " + textStatus + " - " + errorThrown);
-}
-});
-});
-});
-console.log(data)
-	</script>
-
+  <script>
+    $(document).ready(function () {
+      $('#pregunta-form').submit(function (e) {
+        e.preventDefault()
+        console.log('Formulario enviado')
+        var formData = $(this).serialize()
+        console.log('Datos del formulario: ' + formData)
+        $.ajax({
+          type: 'POST',
+          url: "{{ path('app_preguntas') }}",
+          data: formData,
+          success: function (data) {
+            console.log('Respuesta recibida: ' + data)
+            var comentarioHtml = '<div class="media mt-4">'
+            comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">'
+            comentarioHtml += '<div class="media-body">'
+            comentarioHtml += '<h6 class="mt-0 mb-1">' + data.usuario + '</h6>'
+            comentarioHtml += '<p>' + data.pregunta + '</p>'
+            comentarioHtml += '<small>' + data.fecha + '</small>'
+            comentarioHtml += '</div></div>'
+            $('#preguntas-comentarios').append(comentarioHtml)
+          }
+        })
+      })
+    })
+  </script>
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto">
-			</div>
-			<div class="col-md-8">
-				<h5 class="mt-3">{{ producto.nombreProd }}</h5>
-				<p class="mt-3">
-					<strong>Genero:</strong>
-					{{ producto.genero }}
-					<br>
-					<strong>Precio:</strong>
-					{{ producto.precio }}
-					<br>
-					<strong>Descuento:</strong>
-					{{ producto.descuento }}
-					<br>
-					<strong>Talla:</strong>
-					{{ producto.talla }}
-					<br>
-					<strong>Tipo:</strong>
-					{{ producto.tipo }}
-				</p>
-				<form action="{{ path('app_carrito', {'id': producto.id}) }}" method="post" class="form-inline mt-3">
-					<div class="form-group mr-3">
-						<label for="cantidad">Cantidad:</label>
-						<input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1">
-					</div>
-					<input type="submit" class="btn btn-primary" value="Agregar al carrito">
-				</form>
-				{% if is_granted('ROLE_USER') %}
-					<form id="pregunta-form">
-						<input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí">
-						<button type="submit" id="pregunta-submit">Enviar pregunta</button>
-					</form>
-				{% endif %}
-				<div id="preguntas-respuestas">
-					<div class="container">
-						<div class="container mt-4">
-							<h5>Preguntas y respuestas de clientes</h5>
-							<hr>
-							<p class="small text-muted">
-								Encuentra respuestas en la información del producto, en preguntas y respuestas y en reseñas.
-							</p>
-						</div>
-						<div class="container mt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto" />
+      </div>
+      <div class="col-md-8">
+        <h5 class="mt-3">{{ producto.nombreProd }}</h5>
+        <p class="mt-3">
+          <strong>Genero:</strong>
+          {{ producto.genero }}
+          <br />
+          <strong>Precio:</strong>
+          {{ producto.precio }}
+          <br />
+          <strong>Descuento:</strong>
+          {{ producto.descuento }}
+          <br />
+          <strong>Talla:</strong>
+          {{ producto.talla }}
+          <br />
+          <strong>Tipo:</strong>
+          {{ producto.tipo }}
+        </p>
+        <form action="{{ path('app_carrito', { id: producto.id }) }}" method="post" class="form-inline mt-3">
+          <div class="form-group mr-3">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Agregar al carrito" />
+        </form>
+        {% if is_granted('ROLE_USER') %}
+          <form id="pregunta-form">
+            <input type="hidden" name="id" value="{{ producto.id }}" />
+            <input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí" />
+            <button type="submit" id="pregunta-submit">Enviar pregunta</button>
+          </form>
+        {% endif %}
 
-							<form>
-								<div class="input-group mb-3 mt-4">
-									<input type="text" class="form-control" placeholder="Escribe tu pregunta o palabra clave" aria-describedby="button-addon2">
-									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" id="button-addon2">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							</form>
-						</div>
+        <div id="preguntas-comentarios">
+    <h4>Comentarios y preguntas</h4>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="media-area">
+                {% for pregunta in preguntas %}
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object rounded-circle" src="{{ asset('ruta/a/imagen/perfil.jpg') }}" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ pregunta.getUsuarioId().getNombre() }}
+                            <small class="text-muted">{{ pregunta.fecha|date('d/m/Y') }}</small>
+                        </h4>
+                        <p>{{ pregunta.texto }}</p>
+                        <div class="media-footer">
+                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-thumbs-up"></i> Me gusta</a>
+                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-thumbs-down"></i> No me gusta</a>
+                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-reply"></i> Responder</a>
+							
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Comentarios</h5>
-								<hr>
-								<div class="container mt-4">
-									<div class="card">
-										<div class="card-body">
-											<h5 class="card-title">Pregunta:</h5>
-											<p class="card-text">¿Cómo puedo cambiar mi contraseña?</p>
-											<hr>
-											<h5 class="card-title">Respuesta:</h5>
-											<p class="card-text">Para cambiar tu contraseña, ve a tu perfil y selecciona la opción de "Cambiar contraseña". Allí podrás ingresar tu nueva contraseña y confirmarla.</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card mt-4">
-						<div class="card-body">
-							<h5 class="card-title">Respuestas</h5>
-							<div id="preguntas-comentarios"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+      </div>
+    </div>
+  </div>
 
+  <!-- MA Boton para borrar producto admin -->
 
-	<!-- MA Boton para borrar producto admin -->
-
-	{% if is_granted('ROLE_ADMIN') %}
-		<!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
-		{{ include('productos/_delete_form.html.twig') }}
-
-	{% endif %}
-	<div id="lista-preguntas"></div>
-
+  {% if is_granted('ROLE_ADMIN') %}
+    <!-- Alex si es un usuario registrado y hay una pregunta del producto se motrara el código -->
+    {{ include('productos/_delete_form.html.twig') }}
+  {% endif %}
 {% endblock %}

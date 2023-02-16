@@ -39,7 +39,17 @@ class PreguntasRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
+    public function findOneByid($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.productos_id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    //    /**
 //     * @return Preguntas[] Returns an array of Preguntas objects
 //     */
 //    public function findByExampleField($value): array
@@ -53,14 +63,13 @@ class PreguntasRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
-//    public function findOneBySomeField($value): ?Preguntas
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function borrar($value): ?Preguntas
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

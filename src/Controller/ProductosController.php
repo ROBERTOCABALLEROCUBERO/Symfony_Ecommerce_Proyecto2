@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PreguntasRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Productos;
 use App\Form\Productos1Type;
@@ -11,6 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Preguntas;
+
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/productos")
@@ -77,32 +85,15 @@ class ProductosController extends AbstractController
     /**
      * @Route("/{id}", name="app_productos_show", methods={"GET"})
      */
-    public function show(Productos $producto, Request $request, ProductosRepository $productosRepository): Response
+    public function show(Productos $producto, Request $request, ProductosRepository $productosRepository, PreguntasRepository $preguntasRepository): Response
     {
-        if ($request->isXmlHttpRequest()) {
-            $id = $request->get("id");
-            $texto = $request->request->get('pregunta');
-            $pregunta = new Preguntas();
-            $pregunta->setFecha(new \DateTime());
-            $user = $this->getUser();
-            $userId = $user->getId();
-            $pregunta->setUsuarioId($userId);
-            $pregunta->setTexto($texto);
-            $pregunta->setProductosId($id);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($pregunta);
-            $entityManager->flush();
-            $data = [
-                'pregunta' => $pregunta->getTexto(),
-                'fecha' => $pregunta->getFecha()->format('d/m/Y'),
-                'usuario' => $userId,
-            ];
-            return new JsonResponse($data);
-        }
+        $id = $request->get('id');
+    $preguntas = $preguntasRepository->findOneByid($id);    
 
-        return $this->render('productos/show.html.twig', [
-            'producto' => $producto,
-        ]);
+    return $this->render('productos/show.html.twig', [
+        'producto' => $producto,
+        'preguntas' => $preguntas
+    ]);
     }
 
     /**
