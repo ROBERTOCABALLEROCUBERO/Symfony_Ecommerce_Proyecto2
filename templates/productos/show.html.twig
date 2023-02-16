@@ -1,114 +1,124 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Productos
+	Productos
 {% endblock %}
 {% block javascripts %}
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script>
-    $(document).ready(function () { // Evento que se ejecta cuando el documento ha terminado de cargar
-      $('#pregunta-form').submit(function (e) { // Se ejecuta cuando se envia el formulario
-        e.preventDefault() // previene que el formulario se envíe a través de una solicitud POST normal y que utilice ajax en su lugar
-        console.log('Formulario enviado')
-        var formData = $(this).serialize() // Los datos del formulario se serializan
-        console.log('Datos del formulario: ' + formData)
-        $.ajax({
-          type: 'POST',
-          url: "{{ path('app_preguntas') }}",
-          data: formData,
-          success: function (data) {
-            console.log('Respuesta recibida: ' + data)
-            var comentarioHtml = '<div class="media mt-4">'
-            comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">'
-            comentarioHtml += '<div class="media-body">'
-            comentarioHtml += '<h6 class="mt-0 mb-1">' + data.usuario + '</h6>'
-            comentarioHtml += '<p>' + data.pregunta + '</p>'
-            comentarioHtml += '<small>' + data.fecha + '</small>'
-            comentarioHtml += '</div></div>'
-            $('#preguntas-comentarios').append(comentarioHtml)
-          }
-        }) // Envia un formulario de preguntas y actualiza dinámicamente una sección de la página con los comentarios de las preguntas.
-      })
-    })
-  </script>
+	<script>
+		$(document).ready(function () { // Evento que se ejecta cuando el documento ha terminado de cargar
+$('#pregunta-form').submit(function (e) { // Se ejecuta cuando se envia el formulario
+e.preventDefault() // previene que el formulario se envíe a través de una solicitud POST normal y que utilice ajax en su lugar
+console.log('Formulario enviado')
+var formData = $(this).serialize() // Los datos del formulario se serializan
+console.log('Datos del formulario: ' + formData)
+$.ajax({
+type: 'POST',
+url: "{{ path('app_preguntas') }}",
+data: formData,
+success: function (data) {
+console.log('Respuesta recibida: ' + data)
+var comentarioHtml = '<div class="media mt-4">'
+comentarioHtml += '<img class="mr-3 rounded-circle" src="https://via.placeholder.com/64x64" alt="Usuario">'
+comentarioHtml += '<div class="media-body">'
+comentarioHtml += '<h6 class="mt-0 mb-1">' + data.usuario + '</h6>'
+comentarioHtml += '<p>' + data.pregunta + '</p>'
+comentarioHtml += '<small>' + data.fecha + '</small>'
+comentarioHtml += '</div></div>'
+$('#preguntas-comentarios').append(comentarioHtml)
+}
+}) // Envia un formulario de preguntas y actualiza dinámicamente una sección de la página con los comentarios de las preguntas.
+})
+})
+	</script>
 {% endblock %}
 
 {% block body %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto" />
-      </div>
-      <div class="col-md-8">
-        <h5 class="mt-3">{{ producto.nombreProd }}</h5>
-        <p class="mt-3">
-          <strong>Genero:</strong>
-          {{ producto.genero }}
-          <br />
-          <strong>Precio:</strong>
-          {{ producto.precio }}
-          <br />
-          <strong>Descuento:</strong>
-          {{ producto.descuento }}
-          <br />
-          <strong>Talla:</strong>
-          {{ producto.talla }}
-          <br />
-          <strong>Tipo:</strong>
-          {{ producto.tipo }}
-        </p>
-        <form action="{{ path('app_carrito', { id: producto.id }) }}" method="post" class="form-inline mt-3">
-          <div class="form-group mr-3">
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1" />
-          </div>
-          <input type="submit" class="btn btn-primary" value="Agregar al carrito" />
-        </form>
-        {% if is_granted('ROLE_USER') %}
-          <form id="pregunta-form">
-            <input type="hidden" name="id" value="{{ producto.id }}" />
-            <input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí" />
-            <button type="submit" id="pregunta-submit">Enviar pregunta</button>
-          </form>
-        {% endif %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<img src="{{ producto.fotoprod }}" class="img-fluid" alt="Foto del producto"/>
+			</div>
+			<div class="col-md-8">
+				<h5 class="mt-3">{{ producto.nombreProd }}</h5>
+				<p class="mt-3">
+					<strong>Genero:</strong>
+					{{ producto.genero }}
+					<br/>
+					<strong>Precio:</strong>
+					{{ producto.precio }}
+					<br/>
+					<strong>Descuento:</strong>
+					{{ producto.descuento }}
+					<br/>
+					<strong>Talla:</strong>
+					{{ producto.talla }}
+					<br/>
+					<strong>Tipo:</strong>
+					{{ producto.tipo }}
+				</p>
+				<form action="{{ path('app_carrito', { id: producto.id }) }}" method="post" class="form-inline mt-3">
+					<div class="form-group mr-3">
+						<label for="cantidad">Cantidad:</label>
+						<input type="number" class="form-control" id="cantidad" name="cantidad" min="1" max="{{ producto.cantidad }}" value="1"/>
+					</div>
+					<input type="submit" class="btn btn-primary" value="Agregar al carrito"/>
+				</form>
+				{% if is_granted('ROLE_USER') %}
+					<form id="pregunta-form">
+						<input type="hidden" name="id" value="{{ producto.id }}"/>
+						<input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí"/>
+						<button type="submit" id="pregunta-submit">Enviar pregunta</button>
+						{% if app.user == question.user or is_granted('ROLE_ADMIN') %}
+							<!-- Si es el propietario de la pregunta o el administrados podra borrar la pregunta-->
+							{{ include('preguntas/_delete_form.html.twig') }}
+						{% endif %}
+					</form>
+				{% endif %}
 
-        <div id="preguntas-comentarios">
-    <h4>Comentarios y preguntas</h4>
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="media-area">
-                {% for pregunta in preguntas %}
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object rounded-circle" src="{{ asset('ruta/a/imagen/perfil.jpg') }}" alt="...">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{ pregunta.getUsuarioId().getNombre() }}
-                            <small class="text-muted">{{ pregunta.fecha|date('d/m/Y') }}</small>
-                        </h4>
-                        <p>{{ pregunta.texto }}</p>
-                        <div class="media-footer">
-                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-thumbs-up"></i> Me gusta</a>
-                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-thumbs-down"></i> No me gusta</a>
-                            <a href="#" class="btn btn-default btn-sm"><i class="fas fa-reply"></i> Responder</a>
-							
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
+				<div id="preguntas-comentarios">
+					<h4>Comentarios y preguntas</h4>
+					<hr>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="media-area">
+								{% for pregunta in preguntas %}
+									<div class="media">
+										<a class="pull-left" href="#">
+											<img class="media-object rounded-circle" src="{{ asset('ruta/a/imagen/perfil.jpg') }}" alt="...">
+										</a>
+										<div class="media-body">
+											<h4 class="media-heading">{{ pregunta.getUsuarioId().getNombre() }}
+												<small class="text-muted">{{ pregunta.fecha|date('d/m/Y') }}</small>
+											</h4>
+											<p>{{ pregunta.texto }}</p>
+											<div class="media-footer">
+												<a href="#" class="btn btn-default btn-sm">
+													<i class="fas fa-thumbs-up"></i>
+													Me gusta</a>
+												<a href="#" class="btn btn-default btn-sm">
+													<i class="fas fa-thumbs-down"></i>
+													No me gusta</a>
+												<a href="#" class="btn btn-default btn-sm">
+													<i class="fas fa-reply"></i>
+													Responder</a>
 
-      </div>
-    </div>
-  </div>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
 
-  {% if is_granted('ROLE_ADMIN') %}
-    <!-- Alex si es un usuario registrado y hay una pregunta del producto podrá eliminar la pregunta -->
-    {{ include('productos/_delete_form.html.twig') }}
-  {% endif %}
+			</div>
+		</div>
+	</div>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<!-- Alex si es un usuario registrado y hay una pregunta del producto podrá eliminar la pregunta -->
+		{{ include('productos/_delete_form.html.twig') }}
+	{% endif %}
 {% endblock %}

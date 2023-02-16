@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class PreguntasController extends AbstractController
+class PreguntasController extends AbstractController 
 {
     /**
      * @Route("/preguntas", name="app_preguntas")

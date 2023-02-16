@@ -41,3 +41,13 @@ when@prod:
                     adapter: cache.app
                 doctrine.system_cache_pool:
                     adapter: cache.system
+
+# Base de datos
+doctrine: 
+    dbal:
+        driver: 'pdo_mysql'
+        host: 'localhost' # Dirección IP del servidor
+        port: '3306'
+        dbname: 'nombre_de_la_base_de_datos'
+        user: 'nombre_de_usuario'
+        password: 'contraseña'
