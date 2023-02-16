@@ -117,9 +117,8 @@ $('#preguntas-comentarios').append(comentarioHtml)
 		</div>
 	</div>
 
-	<!-- En caso de que seamos un role admin podemos borrar las preguntas si no no aparecería -->
+	<!-- En caso de que seamos un role admin podemos borrar el producto si no, no aparecería -->
 	{% if is_granted('ROLE_ADMIN') %}
-		<!-- Alex si es un usuario registrado y hay una pregunta del producto podrá eliminar la pregunta -->
 		{{ include('productos/_delete_form.html.twig') }}
 	{% endif %}
 {% endblock %}
