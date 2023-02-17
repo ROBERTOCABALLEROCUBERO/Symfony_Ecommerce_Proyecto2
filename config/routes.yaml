@@ -17,5 +17,13 @@ app_showuser:
     methods: GET
 
 
+# Mario:
+# Agregar la ruta para el controlador del idioma:
+app_idiomas:
+    path: /idiomas/{locale}
+    controller: App\Controller\idiomasController::changeLanguage
+    
+
+
 
     
