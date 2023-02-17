@@ -70,7 +70,7 @@ $('#preguntas-comentarios').append(comentarioHtml)
 						<input type="hidden" name="id" value="{{ producto.id }}"/>
 						<input type="text" id="pregunta-texto" name="pregunta" placeholder="Ingrese su pregunta aquí"/>
 						<button type="submit" id="pregunta-submit">Enviar pregunta</button>
-						{% if app.user == question.user or is_granted('ROLE_ADMIN') %}
+						{% if app.user == app_pregun.user or is_granted('ROLE_ADMIN') %}
 							<!-- Si es el propietario de la pregunta o el administrador podra borrar la pregunta-->
 							<button class="btn btn-danger" data-formulario-id="{{ formulario.id }}">Borrar Pregunta</button>
 							<!-- Script para borrar la pregunta -->
