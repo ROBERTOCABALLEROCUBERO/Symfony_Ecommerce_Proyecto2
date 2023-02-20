@@ -12,11 +12,11 @@ class IdiomasController extends AbstractController
     /**
      * @Route("/idiomas", name="app_idiomas")
      */
-/*     public function changeLanguage($locale, SessionInterface $session) {
+     public function changeLanguage($locale, SessionInterface $session) {
         $session -> set('_locale', $locale);
 
         return new Response('Lenguaje cambiado a ' . $locale);
-    } */
+    } 
 } 
 
 //Mario:
