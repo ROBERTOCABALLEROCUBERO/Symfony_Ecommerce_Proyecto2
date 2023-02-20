@@ -9,19 +9,48 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\Regex;
+use App\Form\Email;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nombre')
-            ->add('password')
+            ->add('password', PasswordType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor ingrese su contraseña.'
+                    ]),
+                    new Length([
+                        'min' => 8,
+                        'max' => 32,
+                        'minMessage' => 'La contraseña debe tener al menos {{ limit }} caracteres.',
+                        'maxMessage' => 'La contraseña no puede tener más de {{ limit }} caracteres.'
+                    ]),
+                    new Callback(['callback' => function ($password, ExecutionContextInterface $context) {
+                        $uppercase = preg_match('/[A-Z]/', $password);
+                        $lowercase = preg_match('/[a-z]/', $password);
+                        $number    = preg_match('/[0-9]/', $password);
+                        $specialChars = preg_match('/[^\w]/', $password);
+        
+                        if (!$uppercase || !$lowercase || !$number || !$specialChars) {
+                            $context->buildViolation('La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.')
+                                ->addViolation();
+                        }
+                    },
+                    'message' => 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+                ]),
+            ],
+        ])
             ->add('apellidos')
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new UniqueEntity([
-                        'fields' => 'email',
-                        'message' => 'Este correo electrónico ya está registrado en nuestra base de datos.'
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+                        'message' => 'El correo electrónico debe tener el formato example@example.com.',
                     ]),
                 ],
             ])
