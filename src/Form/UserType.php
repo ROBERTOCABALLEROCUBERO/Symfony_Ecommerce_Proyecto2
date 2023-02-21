@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints\Regex;
 use App\Form\Email;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class UserType extends AbstractType
 {
@@ -19,7 +21,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('password', PasswordType::class, [
+            ->add('plainassword', PasswordType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Por favor ingrese su contraseña.'
@@ -46,15 +48,22 @@ class UserType extends AbstractType
             ],
         ])
             ->add('apellidos')
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-                        'message' => 'El correo electrónico debe tener el formato example@example.com.',
-                    ]),
-                ],
-            ])
-            ->add('fechanac',Datetype::Class, [
+             ->add('email', EmailType::class, [
+        'constraints' => [
+            new UniqueEntity([
+                'fields' => 'email',
+                'message' => 'Este correo electrónico ya está registrado en nuestra base de datos.'
+            ]),
+            new Email([
+                'message' => 'Por favor, introduce una dirección de correo electrónico válida.',
+            ]),
+            new Regex([
+                'pattern' => '/^[^@\s]+@[^@\s]+\.[^@\s]+$/',
+                'message' => 'El correo electrónico debe tener el formato example@example.com.',
+            ]),
+        ],
+    ])
+            ->add('fechanac', Datetype::Class, [
                 'format' => 'dd-MMyyyy',
                 'years' => range(date('1950'), date('Y'))
             ])

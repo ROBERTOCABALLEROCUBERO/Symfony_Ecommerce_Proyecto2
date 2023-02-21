@@ -11,6 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
@@ -38,12 +43,29 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('apellidos')
-            ->add('email')
-            ->add('fechanac',Datetype::Class, [
-                'format' => 'dd-MM-yyyy',
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new Email([
+                        'message' => 'Por favor, introduce una dirección de correo electrónico válida.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[^@\s]+@[^@\s]+\.[^@\s]+$/',
+                        'message' => 'El correo electrónico debe tener el formato example@example.com.',
+                    ]),
+                ],
+            ])
+            ->add('fechanac', Datetype::Class, [
+                'format' => 'dd-MMyyyy',
                 'years' => range(date('1950'), date('Y'))
             ])
-            ->add('numTar')
+            ->add('numTar', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]{2}[0-9]{22}$/',
+                        'message' => 'El número de tarjeta debe comenzar con dos letras seguidas de 22 números.'
+                    ]),
+                ],
+            ])
             ->add('titular')
             ->add('codSeg')
             ->add('direccion')
