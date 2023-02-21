@@ -18,16 +18,17 @@ class IdiomasController extends AbstractController
         return new Response('Lenguaje cambiado a ' . $locale);
     } 
 
-    /*
+    
     //Mario: 
     //Se coloca en el controlador para obtener el idioma almacenado en la sesion
     //utilizamos esta funcion get del objeto request y obtner el idioma de la sesion
+
+    /*
     public function index(Request $request) {
         $locale = $request -> getLocale();
     }
     */
 } 
-
 
 //Mario:
 //El controlador recibe un parametro $locale que corresponde al idioma seleccionado por el usuario
