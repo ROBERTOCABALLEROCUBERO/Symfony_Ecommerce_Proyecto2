@@ -54,7 +54,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('fechanac', Datetype::Class, [
+            ->add('fechanac', Datetype::class, [
                 'format' => 'dd-MMyyyy',
                 'years' => range(date('1950'), date('Y'))
             ])
@@ -66,10 +66,29 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('titular')
-            ->add('codSeg')
-            ->add('direccion')
-        ;
+            ->add('titular', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor, introduce el nombre del titular.',
+                    ]),
+                ],
+            ])->add('codSeg', TextType::class, [
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'max' => 3,
+                        'exactMessage' => 'El código de seguridad debe tener exactamente {{ limit }} números.',
+                    ]),
+                ],
+            ])
+            ->add('direccion', TextType::class, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(Calle|Avenida)\s+[a-zA-Z]+$/',
+                        'message' => 'La dirección debe tener el formato "Calle/Avenida NombreCalle".',
+                    ]),
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
