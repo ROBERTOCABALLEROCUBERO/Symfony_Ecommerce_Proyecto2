@@ -30,8 +30,9 @@ class ProductosController extends AbstractController
      * @Route("/", name="app_homepage", methods={"GET"})
      */
 
-    public function homepage(ProductosRepository $productosRepository)
+    public function homepage(ProductosRepository $productosRepository, Request $request)
     {
+            $locale = $request -> getLocale();
         // your code here
         $ofertaProductos = $productosRepository->findByOnSale();
         $ofertaProductosChunked = array_chunk($ofertaProductos, 8);
