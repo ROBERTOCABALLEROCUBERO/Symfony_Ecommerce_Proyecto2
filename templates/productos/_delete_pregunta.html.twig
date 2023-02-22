@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('preguntas_borrar', {'id': pregunta.id}) }}" onsubmit="return confirm('¿Estás seguro de querer borrar esta pregunta?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pregunta.id) }}">
+    <div class="text-center" style="margin-top: 20px; margin-bottom: 20px;">
+        <button class="btn btn-sm btn-link text-danger" type="submit" data-method="DELETE"><i class="fas fa-trash-alt"></i> Eliminar pregunta</button>
+    </div>
+</form>
