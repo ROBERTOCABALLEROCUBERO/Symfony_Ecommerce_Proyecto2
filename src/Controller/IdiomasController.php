@@ -15,7 +15,7 @@ class IdiomasController extends AbstractController
      public function changeLanguage($locale, SessionInterface $session) {
         $session -> set('_locale', $locale);
 
-        return new Response('Lenguaje cambiado a ' . $locale);
+        return $this->redirectToRoute('app_homepage'); 
     } 
 
     

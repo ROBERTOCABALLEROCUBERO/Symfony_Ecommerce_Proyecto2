@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Preguntas;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -27,25 +27,29 @@ class ProductosController extends AbstractController
 {
 
     /**
-     * @Route("/", name="app_homepage", methods={"GET"})
+     *
+     * @Route({"en": "/", "es": "/"}, name="app_homepage", methods={"GET"})
      */
 
-    public function homepage(ProductosRepository $productosRepository, Request $request)
+    public function homepage(ProductosRepository $productosRepository, Request $request, $locales, TranslatorInterface $translator, $defaultLocale)
     {
-            $locale = $request -> getLocale();
         // your code here
         $ofertaProductos = $productosRepository->findByOnSale();
         $ofertaProductosChunked = array_chunk($ofertaProductos, 8);
 
-        return $this->render('homepage.html.twig', [
-            'ofertaProductosChunked' => $ofertaProductosChunked
-        ]);
+        $translatedText = $translator->trans('Hello');
+
+    return $this->render('homepage.html.twig', [
+        'ofertaProductosChunked' => $ofertaProductosChunked,
+        'translatedText' => $translatedText
+    ]);
     }
     /**
      * @Route("/", name="app_productos_index", methods={"GET"})
      */
-    public function index(ProductosRepository $productosRepository): Response
+    public function index(ProductosRepository $productosRepository,  Request $request): Response
     {
+        $locale = $request -> getLocale();
         return $this->render('productos/index.html.twig', [
             'productos' => $productosRepository->findAll(),
         ]);
