@@ -11,7 +11,11 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
         storage_factory_id: session.storage.factory.native
-
+    
+    #Traduccion para agregar soporte para los idiomas inglés y español.:
+    translator:
+        default_path: '%kernel.project_dir%/src/translations'
+        fallbacks: ['en', 'es']
     #esi: true
     #fragments: true
     php_errors:

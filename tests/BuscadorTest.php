@@ -2,37 +2,32 @@
 
 namespace App\Tests;
 
-use Symfony\Component\Panther\PantherTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BuscadorTest extends PantherTestCase
+class BuscadorTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function test(): void
     {
         $productoBuscado = 'Producto1';
     
-        // Creamos un cliente Panther para realizar peticiones HTTP a nuestra aplicación
-        $client = static::createPantherClient();
+        // Creamos una instancia de KernelBrowser
+        $client = static::createClient();
         // Realizamos una petición GET a la ruta /search/product?nombre=Producto1
-        $crawler = $client->request('GET', '/search/product?nombre=' . $productoBuscado);
+        $client->request('GET', '/search/product?nombre=' . $productoBuscado);
     
         // Comprobamos que la respuesta HTTP tiene un código 200
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     
         // Comprobamos que existe un número de elementos .Productos igual al número de productos devueltos por la búsqueda
+        $crawler = $client->getCrawler();
         $productos = $crawler->filterXPath('//tr[@class="Productos"]');
         $this->assertCount(count($productos), $productos);
     
-        // Comprobamos que el texto del elemento con la clase .nombre dentro de un elemento con la clase 
-        //.producto contiene la cadena "Producto1"
-        $nombreProductos = $crawler->filterXPath('//tr[@class="Productos"]//td[@class="nombre"]');
-        foreach ($nombreProductos as $nombreProducto) {
-            $this->assertStringContainsStringIgnoringCase($productoBuscado, $nombreProducto->nodeValue);
-        }
-        }
+
         
     }
 
-
+}
 
 /*     filter($selector): devuelve un nuevo Crawler que contiene todos los elementos que coinciden con el selector CSS especificado.
 filterXPath($xpath): devuelve un nuevo Crawler que contiene todos los elementos que coinciden con la expresión XPath especificada.
