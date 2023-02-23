@@ -8,7 +8,7 @@ class BuscadorTest extends WebTestCase
 {
     public function test(): void
     {
-        $productoBuscado = 'Producto1';
+        $productoBuscado = 'Panta';
     
         // Creamos una instancia de KernelBrowser
         $client = static::createClient();
@@ -22,7 +22,9 @@ class BuscadorTest extends WebTestCase
         $crawler = $client->getCrawler();
         $productos = $crawler->filterXPath('//tr[@class="Productos"]');
         $this->assertCount(count($productos), $productos);
-    
+    /* Crawler es una herramienta utilizada en algunos frameworks y librerías de PHP, como Symfony, 
+    para hacer pruebas automatizadas de 
+    aplicaciones web. En términos simples, un Crawler es una biblioteca que se utiliza para extraer datos de una página web. */
 
         
     }
