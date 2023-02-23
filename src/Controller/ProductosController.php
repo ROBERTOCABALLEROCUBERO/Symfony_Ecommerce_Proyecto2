@@ -28,28 +28,27 @@ class ProductosController extends AbstractController
 
     /**
      *
-     * @Route({"en": "/", "es": "/"}, name="app_homepage", methods={"GET"})
+     * @Route("/", name="app_homepage", methods={"GET"})
      */
+ 
 
-    public function homepage(ProductosRepository $productosRepository, Request $request, $locales, TranslatorInterface $translator, $defaultLocale)
+    public function homepage(ProductosRepository $productosRepository)
     {
         // your code here
         $ofertaProductos = $productosRepository->findByOnSale();
         $ofertaProductosChunked = array_chunk($ofertaProductos, 8);
 
-        $translatedText = $translator->trans('Hello');
 
     return $this->render('homepage.html.twig', [
         'ofertaProductosChunked' => $ofertaProductosChunked,
-        'translatedText' => $translatedText
     ]);
     }
+
     /**
      * @Route("/", name="app_productos_index", methods={"GET"})
      */
     public function index(ProductosRepository $productosRepository,  Request $request): Response
     {
-        $locale = $request -> getLocale();
         return $this->render('productos/index.html.twig', [
             'productos' => $productosRepository->findAll(),
         ]);
