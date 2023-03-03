@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=50)
      */
-    #[Assert\Length(min: 22, max: 22)]
+    #[Assert\Length(min: 24, max: 24)]
     private $numTar;
 
     /**

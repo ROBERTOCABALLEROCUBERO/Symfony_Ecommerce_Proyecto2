@@ -121,4 +121,6 @@ $('#preguntas-comentarios').append(comentarioHtml)
 <!-- En caso de que seamos un role admin podemos borrar el producto si no, no aparecería -->
 {% if is_granted('ROLE_ADMIN') %}
 	{{ include('productos/_delete_form.html.twig') }}
+<a href="{{ path('app_productos_edit', {'id': producto.id}) }}">Editar</a>
+
 {% endif %}{% endblock %}

@@ -23,7 +23,6 @@
             <td>{{ producto.nombreProd}}</td>
             <td>
                 <a href="{{ path('app_productos_show', {'id': producto.id}) }}">Show</a>
-                <a href="{{ path('app_productos_edit', {'id': producto.id}) }}">Edit</a>
                 <a href="#" class="delete" data-producto-id="{{ producto.id }}">Delete</a>
             </td>
         </tr>

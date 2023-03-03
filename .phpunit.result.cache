@@ -1,1 +1,1 @@
-{"version":1,"defects":{"App\\Tests\\BuscadorTest::test":3},"times":{"App\\Tests\\BuscadorTest::test":2.736}}
+{"version":1,"defects":{"App\\Tests\\BuscadorTest::test":3,"App\\Tests\\SearchProductControllerTest::testSomething":3},"times":{"App\\Tests\\BuscadorTest::test":0.839,"App\\Tests\\SearchProductControllerTest::testSomething":3.512}}

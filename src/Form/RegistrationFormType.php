@@ -58,14 +58,7 @@ class RegistrationFormType extends AbstractType
                 'format' => 'dd-MMyyyy',
                 'years' => range(date('1950'), date('Y'))
             ])
-            ->add('numTar', null, [
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z]{2}[0-9]{22}$/',
-                        'message' => 'El número de tarjeta debe comenzar con dos letras seguidas de 22 números.'
-                    ]),
-                ],
-            ])
+            ->add('numTar', null)
             ->add('titular', TextType::class, [
                 'constraints' => [
                     new NotBlank([
